@@ -1,27 +1,47 @@
 {
-  "name": "hydra-pro",
+  "name": "typescript-app",
   "version": "1.0.0",
   "description": "",
-  "main": "./index.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./app.js"
+    "build:backend": "tsc",
+    "start": "node ./dist/main.js",
+    "build:frontend": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.26.7",
-    "nodemon": "^1.18.11"
+    "@types/express": "^4.17.1",
+    "@types/node": "^12.7.8",
+    "@types/react": "^16.9.3",
+    "@types/react-dom": "^16.9.1",
+    "@types/react-router-dom": "^5.1.0",
+    "css-loader": "^3.2.0",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.3",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
   },
   "dependencies": {
+    "@types/reactstrap": "^8.0.4",
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
     "csurf": "^1.10.0",
-    "express": "^4.17.0",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
     "express-session": "^1.16.2",
     "node-fetch": "^2.6.0",
     "passport": "^0.4.0",
     "passport-oauth": "^1.0.0",
-    "qs": "^6.9.0",
-    "querystring": "^0.2.0"
+    "prop-types": "^15.7.2",
+    "querystring": "^0.2.0",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-router-dom": "^5.1.1",
+    "reactstrap": "^8.0.1"
   }
 }

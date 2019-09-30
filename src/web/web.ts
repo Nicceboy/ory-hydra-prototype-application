@@ -1,34 +1,17 @@
-var OryHydra = require('@oryd/hydra');
+import express from 'express';
+import http from 'http';
+import path from 'path';
 const fetch = require('node-fetch');
-var qs = require('qs');
 var querystring = require('querystring');
 
-// Set this to Hydra's URL
-OryHydra.ApiClient.instance.basePath = 'http://localhost:4445';
+// Express app initialization
+const app = express();
 
-var apiInstance = new OryHydra.AdminApi();
-
-// var id = 'my-client'; // String | The id of the OAuth 2.0 Client.
-
-// var callback = function(error, data, response) {
-//   if (error) {
-//     console.error(error);
-//   } else {
-//     console.log('API called successfully. Returned data: ' + data);
-//   }
-// };
-// apiInstance.getOAuth2Client(id, callback);
-//Set the configuration settings
-
-// index.js
-
-const express = require('express');
+//Authorization
 const passport = require('passport');
 const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 const expressSession = require('express-session');
 const bodyParser = require('body-parser');
-const app = express();
-const port = '3004';
 
 const session = {
   secret: 'LoxodontaElephasMammuthusPalaeoloxodonPrimelephas',
@@ -39,27 +22,7 @@ const session = {
 // Sets up csrf protection
 var csrf = require('csurf');
 var csrfProtection = csrf({ cookie: true });
-
-var callbackAccept = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-var callbackLoginRequest = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    var opts = {
-      subject: new OryHydra.AcceptLoginRequest() // AcceptLoginRequest |
-    };
-    opts.subject = 'asdas';
-    apiInstance.acceptLoginRequest(data.challenge, opts, callbackAccept);
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-
+//passport js requires
 app.use(expressSession(session));
 
 passport.use(
@@ -74,11 +37,8 @@ passport.use(
       callbackURL: 'http://127.0.0.1:5555/callback',
       state: 'fhutgedvhvxgwdmdmqjfnvnh'
     },
-    function(accessToken, refreshToken, profile, done) {
-      debugger;
-      User.findOrCreate(null, function(err, user) {
-        done(err, user);
-      });
+    function(accessToken: any, refreshToken: any, profile: any, done: any) {
+      return done;
     }
   )
 );
@@ -109,6 +69,17 @@ app.get(
     failureRedirect: '/login'
   })
 );
+// Template configuration
+app.set('view engine', 'ejs');
+app.set('views', 'public');
+
+// Static files configuration
+app.use('/assets', express.static(path.join(__dirname, 'frontend')));
+
+// Controllers
+app.get('/*', (req, res) => {
+  res.render('index');
+});
 
 //probely used for auto login
 app.put('/oauth2/auth/requests/login/accept', (request, res) => {
@@ -120,10 +91,10 @@ app.put('/oauth2/auth/requests/login/accept', (request, res) => {
   });
 
   fetch(url.toString())
-    .then(function(res) {
+    .then(function(res: any) {
       if (res.status < 200 || res.status > 302) {
         // This will handle any errors that aren't network related (network related errors are handled automatically)
-        return res.json().then(function(body) {
+        return res.json().then(function(body: any) {
           console.error(
             'An error occurred while making a HTTP request: ',
             body
@@ -134,7 +105,7 @@ app.put('/oauth2/auth/requests/login/accept', (request, res) => {
 
       return res.json();
     })
-    .then(function(response) {
+    .then(function(response: any) {
       console.log(response);
       // This will be called if the HTTP request was successful
       // If hydra was already able to authenticate the user, skip will be true and we do not need to re-authenticate
@@ -159,8 +130,8 @@ app.put('/oauth2/auth/requests/login/accept', (request, res) => {
             'Content-Type': 'application/json'
           }
         })
-          .then(r => r.json())
-          .then(body => {
+          .then((r: any) => r.json())
+          .then((body: any) => {
             console.log(body);
             res.send(body);
           });
@@ -173,6 +144,11 @@ app.put('/oauth2/auth/requests/login/accept', (request, res) => {
   // );
 });
 
-app.listen(port, () => {
-  console.log(`Listening to requests on http://localhost:${port}`);
-});
+// Start function
+export const start = (port: number): Promise<void> => {
+  const server = http.createServer(app);
+
+  return new Promise<void>((resolve, reject) => {
+    server.listen(port, resolve);
+  });
+};

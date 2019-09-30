@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 const fetch = require('node-fetch');
-function Login({ match, location }) {
+type Props = {
+  location: object;
+  match: string;
+};
+function Login(props: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginChallenge, setLoginChallenge] = useState(
@@ -43,8 +47,8 @@ function Login({ match, location }) {
               body: JSON.stringify(body),
               headers: { 'Content-Type': 'application/json' }
             })
-              .then(res => res.json()) // expecting a json response
-              .then(json => {
+              .then((res: any) => res.json()) // expecting a json response
+              .then((json: any) => {
                 window.location.href = json.redirect_to;
               });
             console.log('login');

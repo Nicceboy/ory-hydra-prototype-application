@@ -1,7 +1,7 @@
 import React from 'react';
 import { Jumbotron, Button } from 'reactstrap';
 const fetch = require('node-fetch');
-const Example = props => {
+const Example = () => {
   return (
     <div>
       <Jumbotron>
@@ -19,7 +19,7 @@ const Example = props => {
           <Button
             color="primary"
             onClick={() => {
-              window.location.href = 'http://localhost:3004/auth/provider';
+              window.location.href = 'http://localhost:3000/auth/provider';
               //   fetch('/auth/provider')
               //     .then(res => res.json())
               //     .then(json => console.log(json));
