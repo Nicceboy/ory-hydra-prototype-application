@@ -19,7 +19,7 @@ const Example = () => {
           <Button
             color="primary"
             onClick={() => {
-              window.location.href = 'http://localhost:3000/auth/provider';
+              window.location.href = 'http://127.0.0.1:3000/auth/provider';
               //   fetch('/auth/provider')
               //     .then(res => res.json())
               //     .then(json => console.log(json));

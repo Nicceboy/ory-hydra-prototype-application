@@ -3,15 +3,18 @@ import http from 'http';
 import path from 'path';
 const fetch = require('node-fetch');
 var querystring = require('querystring');
+var cookieParser = require('cookie-parser');
+var csrf = require('csurf');
 
-// Express app initialization
-const app = express();
-
-//Authorization
 const passport = require('passport');
 const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 const expressSession = require('express-session');
 const bodyParser = require('body-parser');
+
+// Express app initialization
+const app = express();
+app.use(cookieParser());
+//Authorization
 
 const session = {
   secret: 'LoxodontaElephasMammuthusPalaeoloxodonPrimelephas',
@@ -20,8 +23,6 @@ const session = {
   saveUninitialized: false
 };
 // Sets up csrf protection
-var csrf = require('csurf');
-var csrfProtection = csrf({ cookie: true });
 //passport js requires
 app.use(expressSession(session));
 
@@ -29,8 +30,8 @@ passport.use(
   'provider',
   new OAuth2Strategy(
     {
-      authorizationURL: 'http://localhost:4444/oauth2/auth',
-      tokenURL: 'http://localhost:4444/oauth2/token',
+      authorizationURL: 'http://127.0.0.1:4444/oauth2/auth',
+      tokenURL: 'http://127.0.0.1:4444/oauth2/token',
       clientID: 'auth-code-client',
       clientSecret:
         '$2a$10$k96GKJLYspXG4XVp6asr3OLzZUykf.CB.MBKEH9SVUx0H29/OlkBK',
@@ -50,8 +51,8 @@ app.use(
     extended: true
   })
 );
-
 app.use(bodyParser.json());
+var csrfProtection = csrf({ cookie: true });
 
 // Redirect the user to the OAuth 2.0 provider for authentication.  When
 // complete, the provider will redirect the user back to the application at
@@ -77,7 +78,7 @@ app.set('views', 'public');
 app.use('/assets', express.static(path.join(__dirname, 'frontend')));
 
 // Controllers
-app.get('/*', (req, res) => {
+app.get('/*', (req: any, res: any) => {
   res.render('index');
 });
 
@@ -149,6 +150,6 @@ export const start = (port: number): Promise<void> => {
   const server = http.createServer(app);
 
   return new Promise<void>((resolve, reject) => {
-    server.listen(port, resolve);
+    server.listen(port, '127.0.0.1');
   });
 };
