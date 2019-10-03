@@ -35,10 +35,11 @@ passport.use(
       clientID: 'auth-code-client',
       clientSecret:
         '$2a$10$k96GKJLYspXG4XVp6asr3OLzZUykf.CB.MBKEH9SVUx0H29/OlkBK',
-      callbackURL: 'http://127.0.0.1:5555/callback',
+      callbackURL: 'http://localhost:3000/callback',
       state: 'fhutgedvhvxgwdmdmqjfnvnh'
     },
     function(accessToken: any, refreshToken: any, profile: any, done: any) {
+      console.log(accessToken);
       return done;
     }
   )
@@ -84,7 +85,6 @@ app.get('/*', (req: any, res: any) => {
 
 //probely used for auto login
 app.put('/oauth2/auth/requests/login/accept', (request, res) => {
-  console.log(request.body.loginChallenge);
   const challenge = request.body.loginChallenge;
   const url = new URL('/oauth2/auth/requests/login', 'http://localhost:4445');
   url.search = querystring.stringify({
@@ -107,7 +107,7 @@ app.put('/oauth2/auth/requests/login/accept', (request, res) => {
       return res.json();
     })
     .then(function(response: any) {
-      console.log(response);
+      // need to check if the atual user exsist in our database TODO
       // This will be called if the HTTP request was successful
       // If hydra was already able to authenticate the user, skip will be true and we do not need to re-authenticate
       // the user.
@@ -138,11 +138,85 @@ app.put('/oauth2/auth/requests/login/accept', (request, res) => {
           });
       }
     });
+});
 
-  // apiInstance.getLoginRequest(
-  //   request.body.loginChallenge,
-  //   callbackLoginRequest
-  // );
+app.put('/oauth2/auth/requests/consent/accept', (request, res) => {
+  const challenge = request.body.consentChallenge;
+  const url = new URL('/oauth2/auth/requests/consent', 'http://localhost:4445');
+  url.search = querystring.stringify({
+    ['consent' + '_challenge']: challenge
+  });
+
+  fetch(url.toString())
+    .then(function(res: any) {
+      if (res.status < 200 || res.status > 302) {
+        // This will handle any errors that aren't network related (network related errors are handled automatically)
+        return res.json().then(function(body: any) {
+          console.error(
+            'An error occurred while making a HTTP request: ',
+            body
+          );
+          return Promise.reject(new Error(body.error.message));
+        });
+      }
+
+      return res.json();
+    })
+    .then(function(response: any) {
+      console.log(response);
+      // need to check if the atual user exsist in our database TODO
+      // This will be called if the HTTP request was successful
+      // If hydra was already able to authenticate the user, skip will be true and we do not need to re-authenticate
+      // the user.
+      if (!response.skip) {
+        // You can apply logic here, for example update the number of times the user logged in.
+        // ...
+
+        // Now it's time to grant the login request. You could also deny the request if something went terribly wrong
+        // (e.g. your arch-enemy logging in...)
+        const url = new URL(
+          '/oauth2/auth/requests/consent/accept',
+          'http://localhost:4445'
+        );
+        url.search = querystring.stringify({
+          ['consent' + '_challenge']: challenge
+        });
+        return fetch(url.toString(), {
+          method: 'PUT',
+          body: JSON.stringify({
+            // We can grant all scopes that have been requested - hydra already checked for us that no additional scopes
+            // are requested accidentally.
+            grant_scope: ['offline', 'openid'],
+
+            // The session allows us to set session data for id and access tokens
+            session: {
+              // This data will be available when introspecting the token. Try to avoid sensitive information here,
+              // unless you limit who can introspect tokens.
+              // access_token: { foo: 'bar' },
+              // This data will be available in the ID token.
+              // id_token: { baz: 'bar' },
+            },
+
+            // ORY Hydra checks if requested audiences are allowed by the client, so we can simply echo this.
+            grant_access_token_audience: response.audience,
+
+            // This tells hydra to remember this consent request and allow the same client to request the same
+            // scopes from the same user, without showing the UI, in the future.
+            remember: true,
+
+            // When this "remember" sesion expires, in seconds. Set this to 0 so it will never expire.
+            remember_for: 3600
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then((r: any) => r.json())
+          .then((body: any) => {
+            res.send(body);
+          });
+      }
+    });
 });
 
 // Start function
