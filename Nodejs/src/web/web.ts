@@ -4,6 +4,8 @@ import path from 'path';
 const fetch = require('node-fetch');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+const uuid = require('node-uuid');
+const oauth2 = require('simple-oauth2');
 var csrf = require('csurf');
 
 const passport = require('passport');
@@ -14,7 +16,6 @@ const bodyParser = require('body-parser');
 // Express app initialization
 const app = express();
 app.use(cookieParser());
-//Authorization
 
 const session = {
   secret: 'LoxodontaElephasMammuthusPalaeoloxodonPrimelephas',
@@ -22,56 +23,25 @@ const session = {
   resave: false,
   saveUninitialized: false
 };
-// Sets up csrf protection
-//passport js requires
+//set up session
 app.use(expressSession(session));
 
-passport.use(
-  'provider',
-  new OAuth2Strategy(
-    {
-      authorizationURL: 'http://127.0.0.1:4444/oauth2/auth',
-      tokenURL: 'http://127.0.0.1:4444/oauth2/token',
-      clientID: 'auth-code-client',
-      clientSecret:
-        '$2a$10$k96GKJLYspXG4XVp6asr3OLzZUykf.CB.MBKEH9SVUx0H29/OlkBK',
-      callbackURL: 'http://localhost:3000/callback',
-      state: 'fhutgedvhvxgwdmdmqjfnvnh'
-    },
-    function(accessToken: any, refreshToken: any, profile: any, done: any) {
-      console.log(accessToken);
-      return done;
-    }
-  )
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(
   bodyParser.urlencoded({
     extended: true
   })
 );
 app.use(bodyParser.json());
-var csrfProtection = csrf({ cookie: true });
 
-// Redirect the user to the OAuth 2.0 provider for authentication.  When
-// complete, the provider will redirect the user back to the application at
-//     /auth/provider/callback
-app.get('/auth/provider', passport.authenticate('provider'));
+const config = {
+  url: process.env.AUTHORIZATION_SERVER_URL || 'http://127.0.0.1:4444/',
+  public: process.env.PUBLIC_URL || 'http://127.0.0.1:4444/',
+  admin: process.env.ADMIN_URL || 'http://127.0.0.1:4445',
+  port: 3000
+};
 
-// The OAuth 2.0 provider has redirected the user back to the application.
-// Finish the authentication process by attempting to obtain an access
-// token.  If authorization was granted, the user will be logged in.
-// Otherwise, authentication has failed.
-app.get(
-  '/auth/provider/callback',
-  passport.authenticate('provider', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  })
-);
 // Template configuration
+
 app.set('view engine', 'ejs');
 app.set('views', 'public');
 
@@ -79,12 +49,75 @@ app.set('views', 'public');
 app.use('/assets', express.static(path.join(__dirname, 'frontend')));
 
 // Controllers
-app.get('/*', (req: any, res: any) => {
-  res.render('index');
+
+app.get('/oauth2/code', (req: any, res: any) => {
+  const credentials = {
+    client: {
+      id: 'auth-code-client',
+      secret: 'secret'
+    },
+    auth: {
+      tokenHost: config.public,
+      authorizeHost: config.url,
+      tokenPath: '/oauth2/token',
+      authorizePath: '/oauth2/auth'
+    }
+  };
+
+  const state = uuid.v4();
+  const scope = req.query.scope || '';
+
+  req.session.credentials = credentials;
+  req.session.state = state;
+  req.session.scope = scope.split(' ');
+
+  const url = oauth2.create(credentials).authorizationCode.authorizeURL({
+    redirect_uri: `http://localhost:5555/callback`,
+    scope,
+    state
+  });
+
+  res.send(JSON.stringify(url));
+});
+
+app.get('/callback', async (req: any, res: any) => {
+  if (req.query.error) {
+    res.send(JSON.stringify(Object.assign({ result: 'error' }, req.query)));
+    return;
+  }
+
+  if (req.query.state !== req.session.state) {
+    res.send(JSON.stringify({ result: 'error', error: 'states mismatch' }));
+    return;
+  }
+
+  if (!req.query.code) {
+    res.send(JSON.stringify({ result: 'error', error: 'no code given' }));
+    return;
+  }
+
+  oauth2
+    .create(req.session.credentials)
+    .authorizationCode.getToken({
+      redirect_uri: `http://localhost:5555/callback`,
+      scope: req.session.scope,
+      code: req.query.code
+    })
+    .then((token: any) => {
+      req.session.oauth2_flow = { token }; // code returns {access_token} because why not...
+      res.send({ result: 'success', token });
+    })
+    .catch((err: any) => {
+      if (err.data.payload) {
+        res.send(JSON.stringify(err.data.payload));
+        return;
+      }
+      res.send(JSON.stringify({ error: err.toString() }));
+    });
 });
 
 //probely used for auto login
-app.put('/oauth2/auth/requests/login/accept', (request, res) => {
+app.put('/oauth2/auth/requests/login/accept', (request: any, res) => {
   const challenge = request.body.loginChallenge;
   const url = new URL('/oauth2/auth/requests/login', 'http://localhost:4445');
   url.search = querystring.stringify({
@@ -219,6 +252,9 @@ app.put('/oauth2/auth/requests/consent/accept', (request, res) => {
     });
 });
 
+app.get('/*', (req: any, res: any) => {
+  res.render('index');
+});
 // Start function
 export const start = (port: number): Promise<void> => {
   const server = http.createServer(app);

@@ -17,7 +17,6 @@ const App = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/" component={Welcome} />
         <Route exact path="/consent" component={Consent} />
-        <Route exact path="/callback" component={TokenPage} />
       </Router>
     </div>
   );

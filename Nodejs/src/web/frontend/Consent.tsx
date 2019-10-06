@@ -55,8 +55,6 @@ function Consent(props: Props) {
             })
               .then((res: any) => res.json()) // expecting a json response
               .then((json: any) => {
-                console.log(json);
-                debugger;
                 window.location.href = json.redirect_to;
               });
             console.log('login');
