@@ -1,0 +1,29 @@
+{
+  "name": "rest-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:backend": "tsc",
+    "start": "node ./dist/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.1",
+    "@types/node": "^12.7.11",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/mongoose": "^5.5.19",
+    "@types/uuid": "^3.4.5",
+    "body-parser": "^1.19.0",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.3",
+    "uuid": "^3.3.3"
+  }
+}
