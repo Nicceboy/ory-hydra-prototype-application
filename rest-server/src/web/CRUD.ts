@@ -1,8 +1,10 @@
 import mongoose, { mongo } from 'mongoose';
 import chalk from 'chalk';
 import uuivd1 from 'uuid/v1'
+import bcrypt from 'bcrypt'
 import { CRUD_Result } from "../helpers/helper"
 import { Dictionary } from 'express-serve-static-core';
+
 
 
 
@@ -13,6 +15,8 @@ var Users = mongoose.model('users', userSchema);
 
 
 export async function CreateUser(reqBody: any): Promise<CRUD_Result> {
+  let passwordHash:String = await hashPassword(reqBody.password);
+  reqBody.password = passwordHash;
   var user = new Users(reqBody);
   let result = {} as CRUD_Result;
   user.set("ID", uuivd1());
@@ -79,4 +83,18 @@ export async function DeleteUser(filter: Dictionary<String>): Promise<CRUD_Resul
   }
 
   return result;
+}
+
+async function hashPassword (password:String) : Promise<String> {
+
+  const saltRounds = 10;
+
+  const hashedPassword = await new Promise((resolve, reject) => {
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+      if (err) reject(err)
+      resolve(hash)
+    });
+  })
+
+  return hashedPassword as String; 
 }
