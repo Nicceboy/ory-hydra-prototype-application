@@ -3,6 +3,7 @@ var QRCode = require('qrcode');
 var secret="KNVXEKKRGQWHCQKUFZTWK3BDEE2TST2J" 
                            // this is an example of the key we obtained for every third party application and it could be generated using:
                            // var secret = speakeasy.generateSecret({length: 20}); console.log(secret.base32);
+                           // then it will be stored in the database for this client only one time (constant) and the user can't see it
 QRCode.toDataURL(secret, function(err, image_data) {
 
     QRCode.toString(image_data,{type:'terminal'}, function (err, url) {
@@ -23,4 +24,4 @@ var token = speakeasy.totp({
   secret: secret,
   encoding: 'base32',
 });
-// This was to make the server know the 6-digit secret key corresponding to the 32-character secret key at any given time
+// This was to make the server know the 6-digit secret key corresponding to the constant 32-character secret key at any given time
