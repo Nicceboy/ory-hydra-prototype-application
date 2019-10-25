@@ -11,6 +11,7 @@ QRCode.toDataURL(secret, function(err, image_data) {
     QRCode.toString(image_data,{type:'terminal'}, function (err, url) {
         console.log(url)
     })
+    console.log(image_data); // A data URI for the QR code image
 });
 // This will show a qrcode that the user will scan it with google authenticator app (requires his google credentials to sign in),
 // and when he does this he will see a 6-digit secretkey that changes every 30 seconds on the screen, he should copy it to the next step
