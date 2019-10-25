@@ -1,6 +1,8 @@
 var speakeasy = require("speakeasy")
 var QRCode = require('qrcode');
-var secret="KNVXEKKRGQWHCQKUFZTWK3BDEE2TST2J" 
+var str1 = "otpauth://totp/SecretKey?secret=";
+var secret_temp = "NRHTKNTMPIZE2XJOJISDKLBWGIZWCKKR";
+var secret = str1.concat(secret_temp);
                            // this is an example of the key we obtained for every third party application and it could be generated using:
                            // var secret = speakeasy.generateSecret({length: 20}); console.log(secret.base32);
                            // then it will be stored in the database for this client only one time (constant) and the user can't see it
@@ -19,7 +21,7 @@ QRCode.toDataURL(secret, function(err, image_data) {
 
 
 var speakeasy = require('speakeasy');
-var secret="KNVXEKKRGQWHCQKUFZTWK3BDEE2TST2J"
+var secret="NRHTKNTMPIZE2XJOJISDKLBWGIZWCKKR";
 var token = speakeasy.totp({
   secret: secret,
   encoding: 'base32',
