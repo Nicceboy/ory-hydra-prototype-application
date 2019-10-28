@@ -1,0 +1,29 @@
+var speakeasy = require("speakeasy")
+var QRCode = require('qrcode');
+var str1 = "otpauth://totp/SecretKey?secret="
+var secret_temp = "NRHTKNTMPIZE2XJOJISDKLBWGIZWCKKR"
+var secret = str1.concat(secret_temp);
+                           // this is an example of the key we obtained for every third party application and it could be generated using:
+                           // var secret = speakeasy.generateSecret({length: 20}); console.log(secret.base32);
+                           // then it will be stored in the database for this client only one time (constant) and the user can't see it
+QRCode.toDataURL(secret, function(err, image_data) {
+    QRCode.toString(image_data,{type:'terminal'}, function (err, url) {
+        console.log(url)
+    })
+    console.log(image_data); // A data URI for the QR code image
+});
+// This will show a qrcode that the user will scan it with google authenticator app (requires his google credentials to sign in),
+// and when he does this he will see a 6-digit secretkey that changes every 30 seconds on the screen, he should copy it to the next step
+// and the server should authenticate this 6-number secret key with the generated 6-digit secret key associated with
+// the constant 32-character secret key of the third party application.
+
+
+
+
+var speakeasy = require('speakeasy');
+var secret="NRHTKNTMPIZE2XJOJISDKLBWGIZWCKKR"
+var token = speakeasy.totp({
+  secret: secret,
+  encoding: 'base32',
+});
+// This was to make the server know the 6-digit secret key corresponding to the constant 32-character secret key at any given time
