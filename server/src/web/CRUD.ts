@@ -5,15 +5,13 @@ import bcrypt from 'bcrypt'
 import { CRUD_Result } from "../helpers/helper"
 import { Dictionary } from 'express-serve-static-core';
 
-
-
-
 var unsuccessful = chalk.bold.red;
 
 var userSchema = require('../model/user')
 var Users = mongoose.model('users', userSchema);
 
-
+//User CRUD
+//----------------------------------------------------------------------------------------------
 export async function CreateUser(reqBody: any): Promise<CRUD_Result> {
   let passwordHash:String = await hashPassword(reqBody.password);
   reqBody.password = passwordHash;
@@ -84,7 +82,7 @@ export async function DeleteUser(filter: Dictionary<String>): Promise<CRUD_Resul
 
   return result;
 }
-
+//----------------------------------------------------------------------------------------------
 async function hashPassword (password:String) : Promise<String> {
 
   const saltRounds = 10;

@@ -23,23 +23,24 @@ var connector = db.run();
 // Express app initialization
 const app = express();
 
-// Template configuration
-app.set("view engine", "ejs");
-app.set("views", "public");
+// // Template configuration
+// app.set("view engine", "ejs");
+// app.set("views", "public");
 
-// Static files configuration
-app.use("/assets", express.static(path.join(__dirname, "frontend")));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// // Static files configuration
+// app.use("/assets", express.static(path.join(__dirname, "frontend")));
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 
-// Controllers
-app.get("/", (req, res) => {
-    res.send("Hello world!!");
-});
+// // Controllers
+// app.get("/", (req, res) => {
+//     res.send("Hello world!!");
+// });
 
 
-
-app.post('/createuser', async function (req, res) {
+//user management
+//-----------------------------------------------------------------------
+app.post('/user-management/user', async function (req, res) {
     const result: CRUD_Result = await crud.CreateUser(req.body);
     if (result.error_value == 0) {
         res.status(200).send(JSON.stringify(result));
@@ -51,8 +52,8 @@ app.post('/createuser', async function (req, res) {
     console.dir(JSON.stringify(result));
 }
 );
-app.post('/finduser', async function (req, res) {
-    let email: String = req.body.email;
+app.get('/user-management/user/:email', async function (req, res) {
+    let email: String = req.params.email;
     const result: CRUD_Result = await crud.FindUser(email);
     if (result.error_value == 0) {
         res.status(200).send(JSON.stringify(result));
@@ -65,7 +66,7 @@ app.post('/finduser', async function (req, res) {
 }
 );
 
-app.put('/user', async function (req, res) {
+app.put('/user-management/user', async function (req, res) {
     var filter = req.body.email;
     const result: CRUD_Result = await crud.UpdateUser({ 'email': filter }, req.body);
     if (result.error_value == 0) {
@@ -78,7 +79,7 @@ app.put('/user', async function (req, res) {
     console.dir(JSON.stringify(result));
 }
 );
-app.delete('/user', async function (req, res) {
+app.delete('/user-management/user', async function (req, res) {
     var filter = req.body.email;
     const result: CRUD_Result = await crud.DeleteUser({ 'email': filter });
     if (result.error_value == 0) {
@@ -91,7 +92,7 @@ app.delete('/user', async function (req, res) {
     console.dir(JSON.stringify(result));
 }
 );
-
+//-----------------------------------------------------------------------
 
 // Start function
 export const start = (port: number): Promise<void> => {
@@ -101,27 +102,3 @@ export const start = (port: number): Promise<void> => {
         server.listen(port, resolve);
     });
 };
-
-// async function AddUser(reqBody: any): Promise<CRUD_Result> {
-
-//     let error = await connector.then(async () => {
-//         return await crud.createUser(reqBody)
-//     })
-//     let message = "";
-//     let result = {} as CRUD_Result;
-//     if (error == 1) {
-//         result.return_value = null;
-//         message = "Error: User could not be created";
-//         result.message = message;
-//         result.error_value = 100;
-//         return result;
-//     }
-//     result.return_value = reqBody;
-//     message = "User successfuly created";
-//     result.message = message;
-//     result.error_value = 0;
-//     return result;
-// }
-
-
-
