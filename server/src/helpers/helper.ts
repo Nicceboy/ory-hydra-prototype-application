@@ -11,23 +11,26 @@ export class CRUD_Result {
         this.error_value = error_value;
     }
 }
-export class CRUD_Error
-{
+export class CRUD_Error {
     message: String;
     error_value: Number;
-    constructor(message:String,error_value:Number)
-    {
+    constructor(message: String, error_value: Number) {
         this.message = message;
         this.error_value = error_value;
     }
-    get_json() : any
-    {
-        var ret = 
+    get_json(): any {
+        var ret =
         {
-            "error_value" : this.error_value,
-            "message" : this.message
+            "error_value": this.error_value,
+            "message": this.message
         };
         return ret;
     }
 }
 
+export enum ReturnErrors {
+    None = 0,
+    NotFound = 1,
+    BadRequest = 2,
+    BadCredentials = 3
+}

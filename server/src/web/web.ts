@@ -10,7 +10,7 @@ import { CRUD_Result } from "../helpers/helper"
 import chalk from 'chalk';
 import bodyParser, { json } from 'body-parser';
 import { EMSGSIZE } from "constants";
-
+import { ReturnErrors } from '../helpers/helper'
 
 var successful = chalk.bold.cyan;
 var error = chalk.bold.yellow;
@@ -24,30 +24,34 @@ var connector = db.run();
 const app = express();
 
 // // Template configuration
-// app.set("view engine", "ejs");
-// app.set("views", "public");
+app.set("view engine", "ejs");
+app.set("views", "public");
 
 // // Static files configuration
 // app.use("/assets", express.static(path.join(__dirname, "frontend")));
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use('/assets', express.static(path.join(__dirname, '/../public')));
+console.log(path.join(__dirname, '/../public'));
 
-// // Controllers
-// app.get("/", (req, res) => {
-//     res.send("Hello world!!");
-// });
 
+app.get('/*', (req: any, res: any) => {
+    res.render('index');
+  });
 
 //user management
 //-----------------------------------------------------------------------
 app.post('/user-management/user', async function (req, res) {
     const result: CRUD_Result = await crud.CreateUser(req.body);
-    if (result.error_value == 0) {
+    if (result.error_value == ReturnErrors.None) {
         res.status(200).send(JSON.stringify(result));
 
-    } else {
-        res.status(500).send(JSON.stringify(result));
+    } else if (result.error_value == ReturnErrors.NotFound) {
+        res.status(404).send(JSON.stringify(result));
 
+    }
+    else if (result.error_value == ReturnErrors.BadRequest) {
+        res.status(400).send(JSON.stringify(result));
     }
     console.dir(JSON.stringify(result));
 }
@@ -55,39 +59,48 @@ app.post('/user-management/user', async function (req, res) {
 app.get('/user-management/user/:email', async function (req, res) {
     let email: String = req.params.email;
     const result: CRUD_Result = await crud.FindUser(email);
-    if (result.error_value == 0) {
+    if (result.error_value == ReturnErrors.None) {
         res.status(200).send(JSON.stringify(result));
 
-    } else {
-        res.status(500).send(JSON.stringify(result));
+    } else if (result.error_value == ReturnErrors.NotFound) {
+        res.status(404).send(JSON.stringify(result));
 
+    }
+    else if (result.error_value == ReturnErrors.BadRequest) {
+        res.status(400).send(JSON.stringify(result));
     }
     console.dir(JSON.stringify(result));
 }
 );
 
-app.put('/user-management/user', async function (req, res) {
-    var filter = req.body.email;
+app.put('/user-management/user/:email', async function (req, res) {
+    var filter = req.params.email;
     const result: CRUD_Result = await crud.UpdateUser({ 'email': filter }, req.body);
-    if (result.error_value == 0) {
+    if (result.error_value == ReturnErrors.None) {
         res.status(200).send(JSON.stringify(result));
 
-    } else {
-        res.status(500).send(JSON.stringify(result));
+    } else if (result.error_value == ReturnErrors.NotFound) {
+        res.status(404).send(JSON.stringify(result));
 
+    }
+    else if (result.error_value == ReturnErrors.BadRequest) {
+        res.status(400).send(JSON.stringify(result));
     }
     console.dir(JSON.stringify(result));
 }
 );
-app.delete('/user-management/user', async function (req, res) {
-    var filter = req.body.email;
+app.delete('/user-management/user/:email', async function (req, res) {
+    var filter = req.params.email;
     const result: CRUD_Result = await crud.DeleteUser({ 'email': filter });
-    if (result.error_value == 0) {
+    if (result.error_value == ReturnErrors.None) {
         res.status(200).send(JSON.stringify(result));
 
-    } else {
-        res.status(500).send(JSON.stringify(result));
+    } else if (result.error_value == ReturnErrors.NotFound) {
+        res.status(404).send(JSON.stringify(result));
 
+    }
+    else if (result.error_value == ReturnErrors.BadRequest) {
+        res.status(400).send(JSON.stringify(result));
     }
     console.dir(JSON.stringify(result));
 }

@@ -2,10 +2,11 @@
   "name": "rest-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:backend": "tsc",
+    "build:frontend": "webpack",
     "start": "node ./dist/main.js"
   },
   "keywords": [],
@@ -14,18 +15,35 @@
   "devDependencies": {
     "@types/express": "^4.17.1",
     "@types/node": "^12.11.1",
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "webpack-cli": "^3.3.9"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
     "@types/chalk": "^2.2.0",
     "@types/mongoose": "^5.5.19",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.3",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/reactstrap": "^8.0.6",
     "@types/uuid": "^3.4.5",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
+    "css-loader": "^3.2.0",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "mongoose": "^5.7.3",
-    "uuid": "^3.3.3"
+    "node-fetch": "^2.6.0",
+    "react": "^16.11.0",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-dom": "^16.11.0",
+    "react-router-dom": "^5.1.2",
+    "reactstrap": "^8.1.1",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.2.1",
+    "uuid": "^3.3.3",
+    "webpack": "^4.41.2"
   }
 }
