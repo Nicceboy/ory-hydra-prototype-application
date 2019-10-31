@@ -17,7 +17,6 @@ var error = chalk.bold.yellow;
 var unsuccessful = chalk.bold.red;
 var termination = chalk.bold.magenta;
 
-
 var connector = db.run();
 
 // Express app initialization
@@ -31,14 +30,12 @@ app.set("views", "public");
 // app.use("/assets", express.static(path.join(__dirname, "frontend")));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/assets', express.static(path.join(__dirname, '/../public')));
-console.log(path.join(__dirname, '/../public'));
-
+app.use('/assets', express.static(path.join(__dirname, 'frontend')));
+console.log(path.join(__dirname, 'frontend'));
 
 app.get('/*', (req: any, res: any) => {
     res.render('index');
   });
-
 //user management
 //-----------------------------------------------------------------------
 app.post('/user-management/user', async function (req, res) {
@@ -52,6 +49,25 @@ app.post('/user-management/user', async function (req, res) {
     }
     else if (result.error_value == ReturnErrors.BadRequest) {
         res.status(400).send(JSON.stringify(result));
+    }
+    console.dir(JSON.stringify(result));
+}
+);
+app.post('/user-management/user-login', async function (req, res) {
+    const result: CRUD_Result = await crud.CheckCredntials(req.body);
+    if (result.error_value == ReturnErrors.None) {
+        res.status(200).send(JSON.stringify(result));
+
+    } else if (result.error_value == ReturnErrors.NotFound) {
+        res.status(404).send(JSON.stringify(result));
+
+    }
+    else if (result.error_value == ReturnErrors.BadRequest) {
+        res.status(400).send(JSON.stringify(result));
+    }
+    else if (result.error_value == ReturnErrors.BadCredentials)
+    {
+        res.status(401).send(JSON.stringify(result));
     }
     console.dir(JSON.stringify(result));
 }
