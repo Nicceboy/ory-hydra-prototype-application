@@ -6,7 +6,9 @@ import { SERVER_PORT } from "../config";
 import { mongodb_url } from "../config"
 import * as db from './database'
 import * as crud from './CRUD'
+import * as groupCrud from './GroupCRUD'
 import { CRUD_Result } from "../helpers/helper"
+import { GroupInfo_Result } from "../helpers/helper"
 import chalk from 'chalk';
 import bodyParser, { json } from 'body-parser';
 import { EMSGSIZE } from "constants";
@@ -98,6 +100,55 @@ app.delete('/user-management/user/:email', async function (req, res) {
     } else if (result.error_value == ReturnErrors.NotFound) {
         res.status(404).send(JSON.stringify(result));
 
+    }
+    else if (result.error_value == ReturnErrors.BadRequest) {
+        res.status(400).send(JSON.stringify(result));
+    }
+    console.dir(JSON.stringify(result));
+}
+);
+
+//-----------------------------------------------------------------------
+
+//-----------------------Group Management-------------------------------
+app.post('/CreateGroup', async function (req, res) {
+    const result: CRUD_Result = await groupCrud.CreateGroup(req.body);
+    if (result.error_value == ReturnErrors.None) {
+        res.status(200).send(JSON.stringify(result));
+
+    } else if (result.error_value == ReturnErrors.NotFound) {
+        res.status(404).send(JSON.stringify(result));
+
+    }
+    else if (result.error_value == ReturnErrors.BadRequest) {
+        res.status(400).send(JSON.stringify(result));
+    }
+    console.dir(JSON.stringify(result));
+}
+);
+
+app.post('/JoinGroup', async function (req, res) {
+    const result: CRUD_Result = await groupCrud.AddUserInGroup(req.body);
+    if (result.error_value == ReturnErrors.None) {
+        res.status(200).send(JSON.stringify(result));
+
+    } else if (result.error_value == ReturnErrors.NotFound) {
+        res.status(404).send(JSON.stringify(result));
+    }
+    else if (result.error_value == ReturnErrors.BadRequest) {
+        res.status(400).send(JSON.stringify(result));
+    }
+    console.dir(JSON.stringify(result));
+}
+);
+
+app.post('/GroupInfo', async function (req, res) {
+    const result: GroupInfo_Result = await groupCrud.GetGroupInfo(req.body);
+    if (result.error_value == ReturnErrors.None) {
+        res.status(200).send(JSON.stringify(result));
+
+    } else if (result.error_value == ReturnErrors.NotFound) {
+        res.status(404).send(JSON.stringify(result));
     }
     else if (result.error_value == ReturnErrors.BadRequest) {
         res.status(400).send(JSON.stringify(result));

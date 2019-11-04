@@ -28,6 +28,17 @@ export class CRUD_Error {
     }
 }
 
+export class GroupInfo_Result {
+    message: String;
+    error_value: Number;
+    return_value: Object | null;
+    constructor(message: String, return_value: Object, error_value: Number) {
+        this.message = message;
+        this.return_value = return_value;
+        this.error_value = error_value;
+    }
+}
+
 export enum ReturnErrors {
     None = 0,
     NotFound = 1,
