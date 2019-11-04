@@ -40,6 +40,7 @@
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
     "reactstrap": "^8.1.1",
+    "semantic-ui-react": "^0.88.1",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.0.0",
     "ts-loader": "^6.2.1",
