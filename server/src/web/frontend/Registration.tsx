@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Divider, Form, Label, Button } from 'semantic-ui-react'
+import { Divider, Form, Label, Button } from 'semantic-ui-react';
 
 const fetch = require('node-fetch');
-
 
 function Registration() {
   const [name, setName] = useState('');
@@ -14,7 +13,11 @@ function Registration() {
   return (
     <Form>
       <Form.Field>
-        <input type='text' placeholder='First name' onChange={e => setName(e.target.value)} />
+        <input
+          type="text"
+          placeholder="First name"
+          onChange={e => setName(e.target.value)}
+        />
         {/* <Label disabled={true} basic color='red' pointing>
           Please enter a value
         </Label> */}
@@ -25,34 +28,56 @@ function Registration() {
         {/* <Label basic color='red' pointing='below'>
           Please enter a value
         </Label> */}
-        <input type='text' placeholder='Last Name' onChange={e => setFamilyname(e.target.value)} />
+        <input
+          type="text"
+          placeholder="Last Name"
+          onChange={e => setFamilyname(e.target.value)}
+        />
       </Form.Field>
       <Divider />
-      <Form.Field >
+      <Form.Field>
         {/* <Label basic color='red' pointing='right'>
           Your password must be 6 characters or more
         </Label> */}
-        <input type='text' name='phonenumber' id='registration_phonenumber' placeholder='Phonenumber' onChange={e => setPhonenumber(e.target.value)} />
+        <input
+          type="text"
+          name="phonenumber"
+          id="registration_phonenumber"
+          placeholder="Phonenumber"
+          onChange={e => setPhonenumber(e.target.value)}
+        />
       </Form.Field>
       <Divider />
-      <Form.Field >
-        <input type='email' name='email' id='registration_email' placeholder='Email' onChange={e => setEmail(e.target.value)} />
+      <Form.Field>
+        <input
+          type="email"
+          name="email"
+          id="registration_email"
+          placeholder="Email"
+          onChange={e => setEmail(e.target.value)}
+        />
         {/* <Label basic color='red' pointing='left'>
           That Email is taken!
         </Label> */}
       </Form.Field>
       <Divider />
 
-      <Form.Field >
+      <Form.Field>
         {/* <Label basic color='red' pointing='right'>
           Your password must be 6 characters or more
         </Label> */}
-        <input type='password' name='password' id='registration_password' placeholder='Password' onChange={e => setPassword(e.target.value)} />
+        <input
+          type="password"
+          name="password"
+          id="registration_password"
+          placeholder="Password"
+          onChange={e => setPassword(e.target.value)}
+        />
       </Form.Field>
 
       <Form.Field>
         <Button
-          color='blue'
+          color="blue"
           onClick={() => {
             const body = {
               name: name,
@@ -69,6 +94,10 @@ function Registration() {
               .then((res: any) => res.json()) // expecting a json response
               .then((json: any) => {
                 console.log(json);
+                if (json.error_value == '0') {
+                  window.location.href = window.location.href =
+                    'http://localhost:5555';
+                }
               });
           }}
         >

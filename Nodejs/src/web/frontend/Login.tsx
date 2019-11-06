@@ -51,7 +51,6 @@ function Login(props: Props) {
               .then((json: any) => {
                 window.location.href = json.redirect_to;
               });
-            console.log('login');
           }}
         >
           Login

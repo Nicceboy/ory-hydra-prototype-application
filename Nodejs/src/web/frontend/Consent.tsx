@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   Form,
@@ -17,9 +17,37 @@ type Props = {
 function Consent(props: Props) {
   const [openid, setOpenid] = useState(0);
   const [offline, setOffline] = useState(0);
+  const [skip, setSkip] = useState(false);
   const [consentChallenge, SetconsentChallenge] = useState(
     location.search.split('=')[1]
   );
+  useEffect(() => {
+    const fetchData = async () => {
+      const body = {
+        consentChallenge: consentChallenge
+      };
+      fetch('/oauth2/auth/requests/consent/skip', {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then((res: any) => res.json()) // expecting a json response
+        .then((json: any) => {
+          if (json) {
+            fetch('/oauth2/auth/requests/consent/accept', {
+              method: 'PUT',
+              body: JSON.stringify(body),
+              headers: { 'Content-Type': 'application/json' }
+            })
+              .then((res: any) => res.json()) // expecting a json response
+              .then((json: any) => {
+                window.location.href = json.redirect_to;
+              });
+          }
+        });
+    };
+    fetchData();
+  }, []);
   return (
     <div>
       <Form>
@@ -57,7 +85,6 @@ function Consent(props: Props) {
               .then((json: any) => {
                 window.location.href = json.redirect_to;
               });
-            console.log('login');
           }}
         >
           Login

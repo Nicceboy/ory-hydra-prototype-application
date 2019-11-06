@@ -29,6 +29,14 @@ const Example = (props: any) => {
           >
             Login
           </Button>
+          <Button
+            color="primary"
+            onClick={() => {
+              window.location.href = 'http://127.0.0.1:3002';
+            }}
+          >
+            Register
+          </Button>
         </p>
       </Jumbotron>
     </div>
