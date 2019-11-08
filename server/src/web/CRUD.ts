@@ -48,7 +48,7 @@ export async function CheckCredntials(reqBody: any): Promise<CRUD_Result> {
     if (passwordCredentialResult) {
       result.error_value = ReturnErrors.None
       result.message = "User Successfuly founded";
-      result.return_value = null;
+      result.return_value = user.toJSON().two_factor;
     }
     else {
       result.error_value = ReturnErrors.BadCredentials
