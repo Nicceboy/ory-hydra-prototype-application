@@ -12,7 +12,7 @@ const App = () => {
   const [counter, setCounter] = useState(0);
 
   return (
-    <div className="App">
+    <div>
       <Router>
         <Route exact path="/login" component={Login} />
         <Route exact path="/" component={Welcome} />
