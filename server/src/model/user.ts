@@ -86,6 +86,10 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             unique: false,
             default: false
+        },
+        token: {
+            type: String,
+            unique: false
         }
     }
 )
