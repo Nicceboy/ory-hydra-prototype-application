@@ -15,6 +15,7 @@ type Props = {
   match: string;
 };
 function Consent(props: Props) {
+  const [show, setShow] = useState(false);
   const [openid, setOpenid] = useState(0);
   const [offline, setOffline] = useState(0);
   const [skip, setSkip] = useState(false);
@@ -33,6 +34,7 @@ function Consent(props: Props) {
       })
         .then((res: any) => res.json()) // expecting a json response
         .then((json: any) => {
+          setShow(json);
           if (json) {
             fetch('/oauth2/auth/requests/consent/accept', {
               method: 'PUT',
@@ -48,50 +50,54 @@ function Consent(props: Props) {
     };
     fetchData();
   }, []);
-  return (
-    <div>
-      <Form>
-        <Label>ahsdahsdahsd we are using your informations</Label>
-        <FormGroup check>
-          <Label check>
-            <Input
-              type="checkbox"
-              onChange={e => setOffline(e.target.valueAsNumber)}
-            />{' '}
-            offline
-          </Label>
-        </FormGroup>
+  if (!show) {
+    return (
+      <div className="App">
+        <Form>
+          <Label>ahsdahsdahsd we are using your informations</Label>
+          <FormGroup check>
+            <Label check>
+              <Input
+                type="checkbox"
+                onChange={e => setOffline(e.target.valueAsNumber)}
+              />{' '}
+              offline
+            </Label>
+          </FormGroup>
 
-        <FormGroup check>
-          <Label check>
-            <Input
-              type="checkbox"
-              onChange={e => setOpenid(e.target.valueAsNumber)}
-            />{' '}
-            openid
-          </Label>
-        </FormGroup>
-        <Button
-          onClick={() => {
-            const body = {
-              consentChallenge: consentChallenge
-            };
-            fetch('/oauth2/auth/requests/consent/accept', {
-              method: 'PUT',
-              body: JSON.stringify(body),
-              headers: { 'Content-Type': 'application/json' }
-            })
-              .then((res: any) => res.json()) // expecting a json response
-              .then((json: any) => {
-                window.location.href = json.redirect_to;
-              });
-          }}
-        >
-          Login
-        </Button>
-      </Form>
-    </div>
-  );
+          <FormGroup check>
+            <Label check>
+              <Input
+                type="checkbox"
+                onChange={e => setOpenid(e.target.valueAsNumber)}
+              />{' '}
+              openid
+            </Label>
+          </FormGroup>
+          <Button
+            onClick={() => {
+              const body = {
+                consentChallenge: consentChallenge
+              };
+              fetch('/oauth2/auth/requests/consent/accept', {
+                method: 'PUT',
+                body: JSON.stringify(body),
+                headers: { 'Content-Type': 'application/json' }
+              })
+                .then((res: any) => res.json()) // expecting a json response
+                .then((json: any) => {
+                  window.location.href = json.redirect_to;
+                });
+            }}
+          >
+            Login
+          </Button>
+        </Form>
+      </div>
+    );
+  } else {
+    return null;
+  }
 }
 
 export default Consent;

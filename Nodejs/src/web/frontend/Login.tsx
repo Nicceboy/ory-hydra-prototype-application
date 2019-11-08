@@ -13,7 +13,7 @@ function Login(props: Props) {
   );
   console.log(email);
   return (
-    <div>
+    <div className="App">
       <Form>
         <FormGroup>
           <Label for="exampleEmail">Email</Label>
