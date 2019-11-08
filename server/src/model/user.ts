@@ -81,6 +81,11 @@ const userSchema = new mongoose.Schema(
         address: {
             type: String,
             unique: false,
+        },
+        two_factor: {
+            type: Boolean,
+            unique: false,
+            default: false
         }
     }
 )

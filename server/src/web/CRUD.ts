@@ -61,9 +61,11 @@ export async function CheckCredntials(reqBody: any): Promise<CRUD_Result> {
 }
 
 
-export async function FindUser(email: String): Promise<CRUD_Result> {
+export async function FindUser(email: String, data: String): Promise<CRUD_Result> {
   let result = {} as CRUD_Result;
-  var user = await Users.findOne({ 'email': email })
+  if (data == null)
+    data = "_id";
+  var user = await Users.findOne({ 'email': email }, data)
   if (user == null) {
     result.error_value = ReturnErrors.NotFound
     result.message = "User with email: " + email + " does not exist";

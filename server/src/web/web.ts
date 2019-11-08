@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.use('/assets', express.static(path.join(__dirname, 'frontend')));
 console.log(path.join(__dirname, 'frontend'));
 
-app.get('/*', (req: any, res: any) => {
+app.get('/main', (req: any, res: any) => {
   res.render('index');
 });
 //user management
@@ -68,7 +68,8 @@ app.post('/user-management/user-login', async function(req, res) {
 });
 app.get('/user-management/user/:email', async function(req, res) {
   let email: String = req.params.email;
-  const result: CRUD_Result = await crud.FindUser(email);
+  console.log(req.query.data);
+  const result: CRUD_Result = await crud.FindUser(email,req.query.data);
   if (result.error_value == ReturnErrors.None) {
     res.status(200).send(JSON.stringify(result));
   } else if (result.error_value == ReturnErrors.NotFound) {
