@@ -1,6 +1,8 @@
 import express from 'express';
 import http from 'http';
 import path from 'path';
+import speakeasy from 'speakeasy'
+import qrcode from 'qrcode'
 const fetch = require('node-fetch');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
@@ -46,7 +48,8 @@ const session = {
   secret: 'LoxodontaElephasMammuthusPalaeoloxodonPrimelephas',
   cookie: {},
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  isauth: true
 };
 //set up session
 app.use(expressSession(session));
@@ -150,10 +153,10 @@ app.put('/oauth2/auth/requests/login/accept', (request: any, res) => {
   });
 
   fetch(url.toString())
-    .then(function(res: any) {
+    .then(function (res: any) {
       if (res.status < 200 || res.status > 302) {
         // This will handle any errors that aren't network related (network related errors are handled automatically)
-        return res.json().then(function(body: any) {
+        return res.json().then(function (body: any) {
           console.error(
             'An error occurred while making a HTTP request: ',
             body
@@ -164,7 +167,7 @@ app.put('/oauth2/auth/requests/login/accept', (request: any, res) => {
 
       return res.json();
     })
-    .then(function(response: any) {
+    .then(function (response: any) {
       // need to check if the atual user exsist in our database TODO
       // This will be called if the HTTP request was successful
       // If hydra was already able to authenticate the user, skip will be true and we do not need to re-authenticate
@@ -225,10 +228,10 @@ app.put('/oauth2/auth/requests/consent/skip', (request, res) => {
   });
 
   fetch(url.toString())
-    .then(function(res: any) {
+    .then(function (res: any) {
       if (res.status < 200 || res.status > 302) {
         // This will handle any errors that aren't network related (network related errors are handled automatically)
-        return res.json().then(function(body: any) {
+        return res.json().then(function (body: any) {
           console.error(
             'An error occurred while making a HTTP request: ',
             body
@@ -239,7 +242,7 @@ app.put('/oauth2/auth/requests/consent/skip', (request, res) => {
 
       return res.json();
     })
-    .then(function(response: any) {
+    .then(function (response: any) {
       // need to check if the atual user exsist in our database TODO
       // This will be called if the HTTP request was successful
       // If hydra was already able to authenticate the user, skip will be true and we do not need to re-authenticate
@@ -262,10 +265,10 @@ app.put('/oauth2/auth/requests/consent/accept', (request, res) => {
   });
 
   fetch(url.toString())
-    .then(function(res: any) {
+    .then(function (res: any) {
       if (res.status < 200 || res.status > 302) {
         // This will handle any errors that aren't network related (network related errors are handled automatically)
-        return res.json().then(function(body: any) {
+        return res.json().then(function (body: any) {
           console.error(
             'An error occurred while making a HTTP request: ',
             body
@@ -276,7 +279,7 @@ app.put('/oauth2/auth/requests/consent/accept', (request, res) => {
 
       return res.json();
     })
-    .then(function(response: any) {
+    .then(function (response: any) {
       console.log(response);
       // need to check if the atual user exsist in our database TODO
       // This will be called if the HTTP request was successful
@@ -330,14 +333,41 @@ app.put('/oauth2/auth/requests/consent/accept', (request, res) => {
         });
     });
 });
+//----------------------------Two Factorization--------------------------
 
+app.get('/mfa/activate', async function (req : any, res: any) {
+  if (true) {
+    var secret = speakeasy.generateSecret({ name: 'Aerial Reward Demo' })
+    req.session.mfasecret_temp = secret.base32;
+    if (secret.otpauth_url != null) {
+      qrcode.toDataURL(secret.otpauth_url, function (err: any, data_url: any) {
+        if (err) {
+          res.render('profile', { uname: req.session.username, mfa: req.session.mfa, qrcode: '', msg: 'Could not get MFA QR code.', showqr: true })
+        } else {
+          console.log(data_url);
+          // Display this data URL to the user in an <img> tag
+          res.render('profile', { uname: req.session.username, mfa: req.session.mfa, qrcode: data_url, msg: 'Please scan with your authenticator app', showqr: true })
+        }
+      })
+    }
+    else {
+      console.log("QR code URL is null");
+    }
+  }
+  else {
+    res.redirect('/login')
+  }
+});
 app.get('/*', (req: any, res: any) => {
   res.render('index');
 });
+
+
+
+
 // Start function
 export const start = (port: number): Promise<void> => {
   const server = http.createServer(app);
-
   return new Promise<void>((resolve, reject) => {
     server.listen(port, '127.0.0.1');
   });

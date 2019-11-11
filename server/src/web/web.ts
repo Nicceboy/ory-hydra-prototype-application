@@ -13,6 +13,7 @@ import chalk from 'chalk';
 import bodyParser, { json } from 'body-parser';
 import { EMSGSIZE } from 'constants';
 import { ReturnErrors } from '../helpers/helper';
+
 const fetch = require('node-fetch');
 
 var successful = chalk.bold.cyan;
@@ -34,9 +35,11 @@ app.set('views', 'public');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/assets', express.static(path.join(__dirname, 'frontend')));
-console.log(path.join(__dirname, 'frontend'));
 
-app.get('/main', (req: any, res: any) => {
+
+
+
+app.get('/', (req: any, res: any) => {
   res.render('index');
 });
 //user management
@@ -109,6 +112,7 @@ app.delete('/user-management/user/:email', async function(req, res) {
 });
 
 //-----------------------------------------------------------------------
+
 
 //-----------------------Group Management-------------------------------
 app.post('/CreateGroup', async function(req, res) {
