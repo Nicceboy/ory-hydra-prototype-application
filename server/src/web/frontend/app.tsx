@@ -11,7 +11,7 @@ const App = () => {
   return (
     <div className="App">
       <Router>
-        <Route exact path="/main" component={Registration} />
+        <Route exact path="/" component={Registration} />
       </Router>
     </div>
   );

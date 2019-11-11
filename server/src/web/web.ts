@@ -39,7 +39,7 @@ app.use('/assets', express.static(path.join(__dirname, 'frontend')));
 
 
 
-app.get('/main', (req: any, res: any) => {
+app.get('/', (req: any, res: any) => {
   res.render('index');
 });
 //user management
