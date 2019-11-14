@@ -1,8 +1,8 @@
 import express from 'express';
 import http from 'http';
 import path from 'path';
-import speakeasy from 'speakeasy'
-import qrcode from 'qrcode'
+import speakeasy from 'speakeasy';
+import qrcode from 'qrcode';
 const fetch = require('node-fetch');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
@@ -18,30 +18,6 @@ const bodyParser = require('body-parser');
 // Express app initialization
 const app = express();
 
-// Add headers
-app.use(function(req, res, next) {
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5555');
-
-  // Request methods you wish to allow
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-  );
-
-  // Request headers you wish to allow
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-Requested-With,content-type'
-  );
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  //res.setHeader('Access-Control-Allow-Credentials', true);
-
-  // Pass to next layer of middleware
-  next();
-});
 app.use(cookieParser());
 
 const session = {
@@ -78,72 +54,6 @@ app.use('/assets', express.static(path.join(__dirname, 'frontend')));
 
 // Controllers
 
-app.get('/oauth2/code', (req: any, res: any) => {
-  const credentials = {
-    client: {
-      id: 'auth-code-client',
-      secret: 'secret'
-    },
-    auth: {
-      tokenHost: config.public,
-      authorizeHost: config.url,
-      tokenPath: '/oauth2/token',
-      authorizePath: '/oauth2/auth'
-    }
-  };
-
-  const state = uuid.v4();
-  const scope = req.query.scope || '';
-
-  req.session.credentials = credentials;
-  req.session.state = state;
-  req.session.scope = scope.split(' ');
-
-  const url = oauth2.create(credentials).authorizationCode.authorizeURL({
-    redirect_uri: `http://localhost:5555/callback`,
-    scope,
-    state
-  });
-
-  res.send(JSON.stringify(url));
-});
-
-app.get('/callback', async (req: any, res: any) => {
-  if (req.query.error) {
-    res.send(JSON.stringify(Object.assign({ result: 'error' }, req.query)));
-    return;
-  }
-
-  if (req.query.state !== req.session.state) {
-    res.send(JSON.stringify({ result: 'error', error: 'states mismatch' }));
-    return;
-  }
-
-  if (!req.query.code) {
-    res.send(JSON.stringify({ result: 'error', error: 'no code given' }));
-    return;
-  }
-
-  oauth2
-    .create(req.session.credentials)
-    .authorizationCode.getToken({
-      redirect_uri: `http://localhost:5555/callback`,
-      scope: req.session.scope,
-      code: req.query.code
-    })
-    .then((token: any) => {
-      req.session.oauth2_flow = { token }; // code returns {access_token} because why not...
-      res.send({ result: 'success', token });
-    })
-    .catch((err: any) => {
-      if (err.data.payload) {
-        res.send(JSON.stringify(err.data.payload));
-        return;
-      }
-      res.send(JSON.stringify({ error: err.toString() }));
-    });
-});
-
 //probely used for auto login
 app.put('/oauth2/auth/requests/login/accept', (request: any, res) => {
   const challenge = request.body.loginChallenge;
@@ -153,10 +63,10 @@ app.put('/oauth2/auth/requests/login/accept', (request: any, res) => {
   });
 
   fetch(url.toString())
-    .then(function (res: any) {
+    .then(function(res: any) {
       if (res.status < 200 || res.status > 302) {
         // This will handle any errors that aren't network related (network related errors are handled automatically)
-        return res.json().then(function (body: any) {
+        return res.json().then(function(body: any) {
           console.error(
             'An error occurred while making a HTTP request: ',
             body
@@ -167,7 +77,7 @@ app.put('/oauth2/auth/requests/login/accept', (request: any, res) => {
 
       return res.json();
     })
-    .then(function (response: any) {
+    .then(function(response: any) {
       // need to check if the atual user exsist in our database TODO
       // This will be called if the HTTP request was successful
       // If hydra was already able to authenticate the user, skip will be true and we do not need to re-authenticate
@@ -228,10 +138,10 @@ app.put('/oauth2/auth/requests/consent/skip', (request, res) => {
   });
 
   fetch(url.toString())
-    .then(function (res: any) {
+    .then(function(res: any) {
       if (res.status < 200 || res.status > 302) {
         // This will handle any errors that aren't network related (network related errors are handled automatically)
-        return res.json().then(function (body: any) {
+        return res.json().then(function(body: any) {
           console.error(
             'An error occurred while making a HTTP request: ',
             body
@@ -242,7 +152,7 @@ app.put('/oauth2/auth/requests/consent/skip', (request, res) => {
 
       return res.json();
     })
-    .then(function (response: any) {
+    .then(function(response: any) {
       // need to check if the atual user exsist in our database TODO
       // This will be called if the HTTP request was successful
       // If hydra was already able to authenticate the user, skip will be true and we do not need to re-authenticate
@@ -265,10 +175,10 @@ app.put('/oauth2/auth/requests/consent/accept', (request, res) => {
   });
 
   fetch(url.toString())
-    .then(function (res: any) {
+    .then(function(res: any) {
       if (res.status < 200 || res.status > 302) {
         // This will handle any errors that aren't network related (network related errors are handled automatically)
-        return res.json().then(function (body: any) {
+        return res.json().then(function(body: any) {
           console.error(
             'An error occurred while making a HTTP request: ',
             body
@@ -279,7 +189,7 @@ app.put('/oauth2/auth/requests/consent/accept', (request, res) => {
 
       return res.json();
     })
-    .then(function (response: any) {
+    .then(function(response: any) {
       console.log(response);
       // need to check if the atual user exsist in our database TODO
       // This will be called if the HTTP request was successful
@@ -335,35 +245,42 @@ app.put('/oauth2/auth/requests/consent/accept', (request, res) => {
 });
 //----------------------------Two Factorization--------------------------
 
-app.get('/mfa/activate', async function (req : any, res: any) {
+app.get('/mfa/activate', async function(req: any, res: any) {
   if (true) {
-    var secret = speakeasy.generateSecret({ name: 'Aerial Reward Demo' })
+    var secret = speakeasy.generateSecret({ name: 'Aerial Reward Demo' });
     req.session.mfasecret_temp = secret.base32;
     if (secret.otpauth_url != null) {
-      qrcode.toDataURL(secret.otpauth_url, function (err: any, data_url: any) {
+      qrcode.toDataURL(secret.otpauth_url, function(err: any, data_url: any) {
         if (err) {
-          res.render('profile', { uname: req.session.username, mfa: req.session.mfa, qrcode: '', msg: 'Could not get MFA QR code.', showqr: true })
+          res.render('profile', {
+            uname: req.session.username,
+            mfa: req.session.mfa,
+            qrcode: '',
+            msg: 'Could not get MFA QR code.',
+            showqr: true
+          });
         } else {
           console.log(data_url);
           // Display this data URL to the user in an <img> tag
-          res.render('profile', { uname: req.session.username, mfa: req.session.mfa, qrcode: data_url, msg: 'Please scan with your authenticator app', showqr: true })
+          res.render('profile', {
+            uname: req.session.username,
+            mfa: req.session.mfa,
+            qrcode: data_url,
+            msg: 'Please scan with your authenticator app',
+            showqr: true
+          });
         }
-      })
+      });
+    } else {
+      console.log('QR code URL is null');
     }
-    else {
-      console.log("QR code URL is null");
-    }
-  }
-  else {
-    res.redirect('/login')
+  } else {
+    res.redirect('/login');
   }
 });
 app.get('/*', (req: any, res: any) => {
   res.render('index');
 });
-
-
-
 
 // Start function
 export const start = (port: number): Promise<void> => {

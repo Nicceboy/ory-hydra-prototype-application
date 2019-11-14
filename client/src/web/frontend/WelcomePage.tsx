@@ -20,7 +20,7 @@ const Example = (props: any) => {
           <Button
             color="primary"
             onClick={() => {
-              fetch('http://127.0.0.1:3000/oauth2/code')
+              fetch('/oauth2/code')
                 .then((res: any) => res.json())
                 .then((json: any) => {
                   window.location.href = json;

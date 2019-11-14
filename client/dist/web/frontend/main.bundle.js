@@ -330,7 +330,7 @@ function TokenPage(props) {
     const [data, setData] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({});
     Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
         const fetchData = () => __awaiter(this, void 0, void 0, function* () {
-            const result = yield fetch('/callback' + props.location.search);
+            const result = yield fetch('/token/callback' + props.location.search);
             let data = yield result.json();
             console.log(data);
         });
@@ -370,7 +370,7 @@ const Example = (props) => {
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "It uses utility classes for typography and spacing to space content out within the larger container."),
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", { className: "lead" },
                 react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Button */ "a"], { color: "primary", onClick: () => {
-                        fetch('http://127.0.0.1:3000/oauth2/code')
+                        fetch('/oauth2/code')
                             .then((res) => res.json())
                             .then((json) => {
                             window.location.href = json;
