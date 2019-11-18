@@ -148,7 +148,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push(["./src/web/frontend/App.tsx","vendors~main"]);
+/******/ 	deferredModules.push(["./src/web/frontend/main.tsx","vendors~main"]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -170,12 +170,26 @@ exports.push([module.i, ".App {\r\n  text-align: center;\r\n}\r\n\r\n.App-logo {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/web/frontend/index.css":
+/*!**************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/web/frontend/index.css ***!
+  \**************************************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
+// Module
+exports.push([module.i, "body {\r\n  margin: 0;\r\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\",\r\n    \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\",\r\n    sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, \"Courier New\",\r\n    monospace;\r\n}\r\n", ""]);
+
+
+/***/ }),
+
 /***/ "./src/web/frontend/App.css":
 /*!**********************************!*\
   !*** ./src/web/frontend/App.css ***!
   \**********************************/
 /*! no static exports found */
-/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!./App.css */ "./node_modules/css-loader/dist/cjs.js!./src/web/frontend/App.css");
@@ -202,31 +216,34 @@ if (content.locals) {
 /*!**********************************!*\
   !*** ./src/web/frontend/App.tsx ***!
   \**********************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Login */ "./src/web/frontend/Login.tsx");
+/* harmony import */ var _WelcomePage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./WelcomePage */ "./src/web/frontend/WelcomePage.tsx");
+/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App.css */ "./src/web/frontend/App.css");
+/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_App_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _TokenPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./TokenPage */ "./src/web/frontend/TokenPage.tsx");
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const Login_1 = __importDefault(__webpack_require__(/*! ./Login */ "./src/web/frontend/Login.tsx"));
-const WelcomePage_1 = __importDefault(__webpack_require__(/*! ./WelcomePage */ "./src/web/frontend/WelcomePage.tsx"));
-__webpack_require__(/*! ./App.css */ "./src/web/frontend/App.css");
-const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-const TokenPage_1 = __importDefault(__webpack_require__(/*! ./TokenPage */ "./src/web/frontend/TokenPage.tsx"));
+
+
+
+
+
 function App(props) {
     console.log(props);
-    return (react_1.default.createElement("div", { className: "App" },
-        react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
-            react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/login", component: Login_1.default }),
-            react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/", component: WelcomePage_1.default }),
-            react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/callback", component: TokenPage_1.default }))));
+    return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", { className: "App" },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__[/* BrowserRouter */ "a"], null,
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__[/* Route */ "b"], { exact: true, path: "/login", component: _Login__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"] }),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__[/* Route */ "b"], { exact: true, path: "/", component: _WelcomePage__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"] }),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__[/* Route */ "b"], { exact: true, path: "/callback", component: _TokenPage__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"] }))));
 }
-exports.default = App;
+/* harmony default export */ __webpack_exports__["a"] = (App);
 
 
 /***/ }),
@@ -235,37 +252,31 @@ exports.default = App;
 /*!************************************!*\
   !*** ./src/web/frontend/Login.tsx ***!
   \************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const reactstrap_1 = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+
 const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/browser.js");
 function Login(props) {
-    const [email, setEmail] = react_1.useState('');
-    const [password, setPassword] = react_1.useState('');
-    const [loginChallenge, setLoginChallenge] = react_1.useState(props.location.search.split('=')[1]);
+    const [email, setEmail] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
+    const [password, setPassword] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
+    const [loginChallenge, setLoginChallenge] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(props.location.search.split('=')[1]);
     console.log(email);
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement(reactstrap_1.Form, null,
-            react_1.default.createElement(reactstrap_1.FormGroup, null,
-                react_1.default.createElement(reactstrap_1.Label, { for: "exampleEmail" }, "Email"),
-                react_1.default.createElement(reactstrap_1.Input, { type: "email", name: "email", id: "exampleEmail", placeholder: "with a placeholder", onChange: e => setEmail(e.target.value) })),
-            react_1.default.createElement(reactstrap_1.FormGroup, null,
-                react_1.default.createElement(reactstrap_1.Label, { for: "examplePassword" }, "Password"),
-                react_1.default.createElement(reactstrap_1.Input, { type: "password", name: "password", id: "examplePassword", placeholder: "password placeholder", onChange: e => setPassword(e.target.value) })),
-            react_1.default.createElement(reactstrap_1.Button, { onClick: () => {
+    return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null,
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Form */ "b"], null,
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* FormGroup */ "c"], null,
+                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Label */ "f"], { for: "exampleEmail" }, "Email"),
+                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Input */ "d"], { type: "email", name: "email", id: "exampleEmail", placeholder: "with a placeholder", onChange: e => setEmail(e.target.value) })),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* FormGroup */ "c"], null,
+                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Label */ "f"], { for: "examplePassword" }, "Password"),
+                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Input */ "d"], { type: "password", name: "password", id: "examplePassword", placeholder: "password placeholder", onChange: e => setPassword(e.target.value) })),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Button */ "a"], { onClick: () => {
                     const body = {
                         loginChallenge: loginChallenge,
                         subject: email,
@@ -285,7 +296,7 @@ function Login(props) {
                     console.log('login');
                 } }, "Login"))));
 }
-exports.default = Login;
+/* harmony default export */ __webpack_exports__["a"] = (Login);
 
 
 /***/ }),
@@ -294,13 +305,15 @@ exports.default = Login;
 /*!****************************************!*\
   !*** ./src/web/frontend/TokenPage.tsx ***!
   \****************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -309,34 +322,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const reactstrap_1 = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+
+
 const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/browser.js");
 function TokenPage(props) {
-    const [openid, setOpenid] = react_1.useState(0);
-    const [data, setData] = react_1.useState({});
-    react_1.useEffect(() => {
+    const [openid, setOpenid] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
+    const [data, setData] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({});
+    Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
         const fetchData = () => __awaiter(this, void 0, void 0, function* () {
-            const result = yield fetch('/callback' + props.location.search);
+            const result = yield fetch('/token/callback' + props.location.search);
             let data = yield result.json();
             console.log(data);
         });
         fetchData();
     });
     console.log(data);
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement(reactstrap_1.Form, null,
-            react_1.default.createElement(reactstrap_1.Button, null, "Login"))));
+    return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null,
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Form */ "b"], null,
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Button */ "a"], null, "Login"))));
 }
-exports.default = TokenPage;
+/* harmony default export */ __webpack_exports__["a"] = (TokenPage);
 
 
 /***/ }),
@@ -345,39 +350,99 @@ exports.default = TokenPage;
 /*!******************************************!*\
   !*** ./src/web/frontend/WelcomePage.tsx ***!
   \******************************************/
-/*! no static exports found */
-/*! all exports used */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const reactstrap_1 = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+
 const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/browser.js");
 const Example = (props) => {
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement(reactstrap_1.Jumbotron, null,
-            react_1.default.createElement("h1", { className: "display-3" }, "Hello, world!"),
-            react_1.default.createElement("p", { className: "lead" }, "This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information."),
-            react_1.default.createElement("hr", { className: "my-2" }),
-            react_1.default.createElement("p", null, "It uses utility classes for typography and spacing to space content out within the larger container."),
-            react_1.default.createElement("p", { className: "lead" },
-                react_1.default.createElement(reactstrap_1.Button, { color: "primary", onClick: () => {
+    return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null,
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Jumbotron */ "e"], null,
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", { className: "display-3" }, "Hello, world!"),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", { className: "lead" }, "This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information."),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", { className: "my-2" }),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "It uses utility classes for typography and spacing to space content out within the larger container."),
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", { className: "lead" },
+                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Button */ "a"], { color: "primary", onClick: () => {
                         fetch('/oauth2/code')
                             .then((res) => res.json())
                             .then((json) => {
                             window.location.href = json;
                         });
                     } }, "Login"),
-                react_1.default.createElement(reactstrap_1.Button, { color: "primary", onClick: () => {
+                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Button */ "a"], { color: "primary", onClick: () => {
                         window.location.href = 'http://127.0.0.1:3002';
                     } }, "Register")))));
 };
-exports.default = Example;
+/* harmony default export */ __webpack_exports__["a"] = (Example);
+
+
+/***/ }),
+
+/***/ "./src/web/frontend/index.css":
+/*!************************************!*\
+  !*** ./src/web/frontend/index.css ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!./index.css */ "./node_modules/css-loader/dist/cjs.js!./src/web/frontend/index.css");
+
+if (typeof content === 'string') {
+  content = [[module.i, content, '']];
+}
+
+var options = {}
+
+options.insert = "head";
+options.singleton = false;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js")(content, options);
+
+if (content.locals) {
+  module.exports = content.locals;
+}
+
+
+/***/ }),
+
+/***/ "./src/web/frontend/main.tsx":
+/*!***********************************!*\
+  !*** ./src/web/frontend/main.tsx ***!
+  \***********************************/
+/*! no exports provided */
+/*! all exports used */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.css */ "./src/web/frontend/index.css");
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App */ "./src/web/frontend/App.tsx");
+/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
+/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+//import * as serviceWorker from './serviceWorker';
+
+console.log('wtf');
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_App__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], null), document.getElementById('root'));
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+//serviceWorker.unregister();
 
 
 /***/ })

@@ -20,7 +20,7 @@ function TokenPage(props: Props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch('/callback' + props.location.search);
+      const result = await fetch('/token/callback' + props.location.search);
       let data = await result.json();
       console.log(data);
     };
