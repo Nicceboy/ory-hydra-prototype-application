@@ -373,6 +373,7 @@ const Example = (props) => {
                         fetch('/oauth2/code')
                             .then((res) => res.json())
                             .then((json) => {
+                            console.log(json);
                             window.location.href = json;
                         });
                     } }, "Login"),
