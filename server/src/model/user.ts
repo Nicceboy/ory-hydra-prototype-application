@@ -90,6 +90,11 @@ const userSchema = new mongoose.Schema(
         token: {
             type: String,
             unique: false
+        },
+        two_factorization_secret:
+        {
+            type: String,
+            unique: false
         }
     }
 )

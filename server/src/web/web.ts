@@ -85,6 +85,7 @@ app.get('/user-management/user/:email', async function(req, res) {
 
 app.put('/user-management/user/:email', async function(req, res) {
   var filter = req.params.email;
+  console.log(filter);
   const result: CRUD_Result = await crud.UpdateUser(
     { email: filter },
     req.body

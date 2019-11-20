@@ -247,28 +247,16 @@ app.put('/oauth2/auth/requests/consent/accept', (request, res) => {
 
 app.get('/mfa/activate', async function(req: any, res: any) {
   if (true) {
-    var secret = speakeasy.generateSecret({ name: 'Aerial Reward Demo' });
+    var secret = speakeasy.generateSecret({ name: 'NiceBoy' })
+    
     req.session.mfasecret_temp = secret.base32;
     if (secret.otpauth_url != null) {
       qrcode.toDataURL(secret.otpauth_url, function(err: any, data_url: any) {
         if (err) {
-          res.render('profile', {
-            uname: req.session.username,
-            mfa: req.session.mfa,
-            qrcode: '',
-            msg: 'Could not get MFA QR code.',
-            showqr: true
-          });
+          res.send(JSON.stringify({ qrcode: '',  secret:secret.hex}))
         } else {
-          console.log(data_url);
           // Display this data URL to the user in an <img> tag
-          res.render('profile', {
-            uname: req.session.username,
-            mfa: req.session.mfa,
-            qrcode: data_url,
-            msg: 'Please scan with your authenticator app',
-            showqr: true
-          });
+          res.send(JSON.stringify({qrcode:data_url, secret:secret.hex}));
         }
       });
     } else {
@@ -278,6 +266,9 @@ app.get('/mfa/activate', async function(req: any, res: any) {
     res.redirect('/login');
   }
 });
+
+
+
 app.get('/*', (req: any, res: any) => {
   res.render('index');
 });

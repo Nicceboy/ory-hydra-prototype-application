@@ -83,11 +83,17 @@ export async function UpdateUser(filter: Dictionary<String>, update: Dictionary<
 
   try {
     var user = await Users.findOneAndUpdate(filter, update, { new: true });
-    result.error_value = ReturnErrors.None
-    result.message = "User Successfuly founded and updated";
-    result.return_value = user;
+    if (user == null) {
+      result.error_value = ReturnErrors.NotFound
+      result.message = "User not found!!";
+      result.return_value = null;
+    } else {
+      result.error_value = ReturnErrors.None
+      result.message = "User Successfuly founded and updated";
+      result.return_value = user;
+    }
   } catch (error) {
-    result.error_value = ReturnErrors.NotFound
+    result.error_value = ReturnErrors.BadRequest
     result.message = error;
     result.return_value = null;
   }
