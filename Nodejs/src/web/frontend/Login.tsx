@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import QRCode from './QRCode';
 const fetch = require('node-fetch');
 type Props = {
   location: object;
@@ -8,12 +9,15 @@ type Props = {
 function Login(props: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [twofactor, setTwofactor] = useState(0);
+  const [url, setUrl] = useState('');
   const [loginChallenge, setLoginChallenge] = useState(
     location.search.split('=')[1]
   );
   console.log(email);
   return (
     <div className="App">
+      {twofactor ? <QRCode email={email} url={url} /> : undefined}
       <Form>
         <FormGroup>
           <Label for="exampleEmail">Email</Label>
@@ -49,7 +53,10 @@ function Login(props: Props) {
             })
               .then((res: any) => res.json()) // expecting a json response
               .then((json: any) => {
-                window.location.href = json.redirect_to;
+                console.log(json);
+                setTwofactor(json.twofactor);
+                setUrl(json.body);
+                // window.location.href = json.redirect_to;
               });
           }}
         >
