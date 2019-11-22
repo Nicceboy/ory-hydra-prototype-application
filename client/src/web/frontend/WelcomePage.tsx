@@ -23,6 +23,7 @@ const Example = (props: any) => {
               fetch('/oauth2/code')
                 .then((res: any) => res.json())
                 .then((json: any) => {
+                  console.log(json);
                   window.location.href = json;
                 });
             }}

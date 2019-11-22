@@ -36,8 +36,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/assets', express.static(path.join(__dirname, 'frontend')));
 
-
-
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST');
+  next();
+});
 
 app.get('/', (req: any, res: any) => {
   res.render('index');
@@ -72,7 +79,7 @@ app.post('/user-management/user-login', async function(req, res) {
 app.get('/user-management/user/:email', async function(req, res) {
   let email: String = req.params.email;
   console.log(req.query.data);
-  const result: CRUD_Result = await crud.FindUser(email,req.query.data);
+  const result: CRUD_Result = await crud.FindUser(email, req.query.data);
   if (result.error_value == ReturnErrors.None) {
     res.status(200).send(JSON.stringify(result));
   } else if (result.error_value == ReturnErrors.NotFound) {
@@ -113,7 +120,6 @@ app.delete('/user-management/user/:email', async function(req, res) {
 });
 
 //-----------------------------------------------------------------------
-
 
 //-----------------------Group Management-------------------------------
 app.post('/CreateGroup', async function(req, res) {

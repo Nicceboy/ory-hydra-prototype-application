@@ -93,6 +93,7 @@ app.put('/oauth2/auth/requests/login/accept', (request: any, res) => {
         .then((r: any) => r.json())
         .then((login: any) => {
           console.log(login);
+          const twofactor = login.return_value;
           if (login.error_value != 0) {
             console.log('jeeee');
             res.send(login.message);
@@ -122,7 +123,8 @@ app.put('/oauth2/auth/requests/login/accept', (request: any, res) => {
                 .then((r: any) => r.json())
                 .then((body: any) => {
                   console.log(body);
-                  res.send(body);
+
+                  res.send({ body, twofactor });
                 });
             }
           }
@@ -247,16 +249,16 @@ app.put('/oauth2/auth/requests/consent/accept', (request, res) => {
 
 app.get('/mfa/activate', async function(req: any, res: any) {
   if (true) {
-    var secret = speakeasy.generateSecret({ name: 'NiceBoy' })
-    
+    var secret = speakeasy.generateSecret({ name: 'NiceBoy' });
+
     req.session.mfasecret_temp = secret.base32;
     if (secret.otpauth_url != null) {
       qrcode.toDataURL(secret.otpauth_url, function(err: any, data_url: any) {
         if (err) {
-          res.send(JSON.stringify({ qrcode: '',  secret:secret.hex}))
+          res.send(JSON.stringify({ qrcode: '', secret: secret.hex }));
         } else {
           // Display this data URL to the user in an <img> tag
-          res.send(JSON.stringify({qrcode:data_url, secret:secret.hex}));
+          res.send(JSON.stringify({ qrcode: data_url, secret: secret.hex }));
         }
       });
     } else {
@@ -266,8 +268,6 @@ app.get('/mfa/activate', async function(req: any, res: any) {
     res.redirect('/login');
   }
 });
-
-
 
 app.get('/*', (req: any, res: any) => {
   res.render('index');
