@@ -94,7 +94,8 @@ const userSchema = new mongoose.Schema(
         two_factorization_secret:
         {
             type: String,
-            unique: false
+            unique: false,
+            default: ""
         }
     }
 )

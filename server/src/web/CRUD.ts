@@ -37,7 +37,7 @@ export async function CheckCredntials(reqBody: any): Promise<CRUD_Result> {
   let result = {} as CRUD_Result;
   let email = reqBody.email;
   let password = reqBody.password;
-  var user = await Users.findOne({ 'email': email })
+  var user = await Users.findOne({ 'email': email }).select('two_factor two_factorization_secret password')
   if (user == null) {
     result.error_value = ReturnErrors.BadCredentials
     result.message = "User with email: " + email + " does not exist";
@@ -48,7 +48,7 @@ export async function CheckCredntials(reqBody: any): Promise<CRUD_Result> {
     if (passwordCredentialResult) {
       result.error_value = ReturnErrors.None
       result.message = "User Successfuly founded";
-      result.return_value = user.toJSON().two_factor;
+      result.return_value = user.toJSON();
     }
     else {
       result.error_value = ReturnErrors.BadCredentials
@@ -82,7 +82,7 @@ export async function UpdateUser(filter: Dictionary<String>, update: Dictionary<
   let result = {} as CRUD_Result;
 
   try {
-    var user = await Users.findOneAndUpdate(filter, update, { new: true });
+    var user = await Users.findOneAndUpdate(filter, update, { new: true }).select(update);
     if (user == null) {
       result.error_value = ReturnErrors.NotFound
       result.message = "User not found!!";
@@ -106,7 +106,7 @@ export async function DeleteUser(filter: Dictionary<String>): Promise<CRUD_Resul
   let result = {} as CRUD_Result;
 
   try {
-    var user = await Users.findOneAndDelete(filter);
+    var user = await Users.findOneAndDelete(filter).select('email _id');
     result.error_value = 0
     result.message = "User Successfuly founded and deleted";
     result.return_value = user;
