@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import QRCodeReact, { QRCode } from 'qrcode.react';
 import { Jumbotron, Button } from 'reactstrap';
 import speakeasy from 'speakeasy';
+import { url } from 'inspector';
 
 const fetch = require('node-fetch');
 type QRCodeProps = {
@@ -44,6 +45,7 @@ function QRCode(props: QRCodeProps) {
               encoding: 'hex',
               token: token
             });
+            console.log(verified);
             if (verified) {
               const email = props.email;
               fetch('http://127.0.0.1:3002/user-management/user/' + email, {
@@ -56,6 +58,9 @@ function QRCode(props: QRCodeProps) {
                 .then((res: any) => res.json()) // expecting a json response
                 .then((json: any) => {
                   console.log(json);
+                  if (json.error_value == 0) {
+                    window.location.href = props.url;
+                  }
                 });
             }
           }}
