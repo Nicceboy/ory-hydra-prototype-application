@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Divider, Form, Label, Button } from 'semantic-ui-react';
+import { Divider, Form, Label, Button, Radio ,Checkbox } from 'semantic-ui-react';
 
 const fetch = require('node-fetch');
 
@@ -9,6 +9,7 @@ function Registration() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phonenumber, setPhonenumber] = useState('');
+  const [twofactor, setTwofactor] = useState(false);
 
   return (
     <Form>
@@ -74,7 +75,18 @@ function Registration() {
           onChange={e => setPassword(e.target.value)}
         />
       </Form.Field>
-
+      <Divider />
+        <Form.Field>
+        <Checkbox toggle label='TwoFactor' onChange= {(e,data)=>{
+          if(data.checked!=undefined){
+            console.log(data.checked);
+            setTwofactor(data.checked)
+          }
+        }
+      }
+        
+        />
+        </Form.Field>
       <Form.Field>
         <Button
           color="blue"
@@ -84,7 +96,8 @@ function Registration() {
               family_name: familyname,
               email: email,
               phone_number: phonenumber,
-              password: password
+              password: password,
+              two_factor:twofactor
             };
             fetch('/user-management/user', {
               method: 'POST',
