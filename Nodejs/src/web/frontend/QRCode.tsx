@@ -8,6 +8,7 @@ const fetch = require('node-fetch');
 type QRCodeProps = {
   email: string;
   url: string;
+  secretProps: string;
 };
 function QRCode(props: QRCodeProps) {
   const [qrcode, setQrcode] = useState('');
@@ -40,8 +41,10 @@ function QRCode(props: QRCodeProps) {
         <Button
           color="primary"
           onClick={() => {
+            console.log(props.secretProps);
+            console.log(secret);
             var verified = speakeasy.totp.verify({
-              secret: secret,
+              secret: props.secretProps == '' ? secret : props.secretProps,
               encoding: 'hex',
               token: token
             });
@@ -68,7 +71,8 @@ function QRCode(props: QRCodeProps) {
           Submit
         </Button>
       </form>
-      <img src={qrcode} />
+
+      {props.secretProps == '' ? <img src={qrcode} /> : undefined}
     </div>
   );
 }

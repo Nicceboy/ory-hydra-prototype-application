@@ -93,7 +93,8 @@ app.put('/oauth2/auth/requests/login/accept', (request: any, res) => {
         .then((r: any) => r.json())
         .then((login: any) => {
           console.log(login);
-          const twofactor = login.return_value;
+          const twofactorboolean = login.return_value.two_factor;
+          const twofactorsecret = login.return_value.two_factorization_secret;
           if (login.error_value != 0) {
             console.log('jeeee');
             res.send(login.message);
@@ -124,7 +125,7 @@ app.put('/oauth2/auth/requests/login/accept', (request: any, res) => {
                 .then((body: any) => {
                   console.log(body);
 
-                  res.send({ body, twofactor });
+                  res.send({ body, twofactorboolean, twofactorsecret });
                 });
             }
           }

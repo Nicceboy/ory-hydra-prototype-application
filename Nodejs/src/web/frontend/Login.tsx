@@ -9,6 +9,7 @@ type Props = {
 function Login(props: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [secret, setSecret] = useState('');
   const [twofactor, setTwofactor] = useState(0);
   const [url, setUrl] = useState('');
   const [loginChallenge, setLoginChallenge] = useState(
@@ -18,7 +19,7 @@ function Login(props: Props) {
   return (
     <div className="App">
       {twofactor ? (
-        <QRCode email={email} url={url} />
+        <QRCode email={email} url={url} secretProps={secret} />
       ) : (
         <Form>
           <FormGroup>
@@ -55,10 +56,11 @@ function Login(props: Props) {
               })
                 .then((res: any) => res.json()) // expecting a json response
                 .then((json: any) => {
-                  console.log(json);
-                  setTwofactor(json.twofactor);
+                  setTwofactor(json.twofactorboolean);
                   setUrl(json.body.redirect_to);
-                  if (!json.twofactor) {
+                  setSecret(json.twofactorsecret);
+
+                  if (!json.twofactorboolean) {
                     window.location.href = json.body.redirect_to;
                   }
                 });
