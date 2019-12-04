@@ -185,11 +185,27 @@ exports.push([module.i, "body {\r\n  margin: 0;\r\n  font-family: -apple-system,
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/web/frontend/style.css":
+/*!**************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/web/frontend/style.css ***!
+  \**************************************************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
+// Module
+exports.push([module.i, ".App {\r\n  margin: 30px auto;\r\n  max-width: 60vw;\r\n  padding: 2em;\r\n  border: 1px solid silver;\r\n  border-radius: 1em;\r\n\r\n  text-align: center;\r\n}\r\n", ""]);
+
+
+/***/ }),
+
 /***/ "./src/web/frontend/App.css":
 /*!**********************************!*\
   !*** ./src/web/frontend/App.css ***!
   \**********************************/
 /*! no static exports found */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!./App.css */ "./node_modules/css-loader/dist/cjs.js!./src/web/frontend/App.css");
@@ -216,34 +232,31 @@ if (content.locals) {
 /*!**********************************!*\
   !*** ./src/web/frontend/App.tsx ***!
   \**********************************/
-/*! exports provided: default */
-/*! exports used: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Login */ "./src/web/frontend/Login.tsx");
-/* harmony import */ var _WelcomePage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./WelcomePage */ "./src/web/frontend/WelcomePage.tsx");
-/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App.css */ "./src/web/frontend/App.css");
-/* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_App_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _TokenPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./TokenPage */ "./src/web/frontend/TokenPage.tsx");
 
-
-
-
-
-
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const Login_1 = __importDefault(__webpack_require__(/*! ./Login */ "./src/web/frontend/Login.tsx"));
+const WelcomePage_1 = __importDefault(__webpack_require__(/*! ./WelcomePage */ "./src/web/frontend/WelcomePage.tsx"));
+__webpack_require__(/*! ./App.css */ "./src/web/frontend/App.css");
+const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+const TokenPage_1 = __importDefault(__webpack_require__(/*! ./TokenPage */ "./src/web/frontend/TokenPage.tsx"));
 function App(props) {
     console.log(props);
-    return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", { className: "App" },
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__[/* BrowserRouter */ "a"], null,
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__[/* Route */ "b"], { exact: true, path: "/login", component: _Login__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"] }),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__[/* Route */ "b"], { exact: true, path: "/", component: _WelcomePage__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"] }),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__[/* Route */ "b"], { exact: true, path: "/callback", component: _TokenPage__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"] }))));
+    return (react_1.default.createElement("div", { className: "App" },
+        react_1.default.createElement(react_router_dom_1.BrowserRouter, null,
+            react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/login", component: Login_1.default }),
+            react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/", component: WelcomePage_1.default }),
+            react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/callback", component: TokenPage_1.default }))));
 }
-/* harmony default export */ __webpack_exports__["a"] = (App);
+exports.default = App;
 
 
 /***/ }),
@@ -252,31 +265,37 @@ function App(props) {
 /*!************************************!*\
   !*** ./src/web/frontend/Login.tsx ***!
   \************************************/
-/*! exports provided: default */
-/*! exports used: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 
-
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const reactstrap_1 = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/browser.js");
 function Login(props) {
-    const [email, setEmail] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
-    const [password, setPassword] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
-    const [loginChallenge, setLoginChallenge] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(props.location.search.split('=')[1]);
+    const [email, setEmail] = react_1.useState('');
+    const [password, setPassword] = react_1.useState('');
+    const [loginChallenge, setLoginChallenge] = react_1.useState(props.location.search.split('=')[1]);
     console.log(email);
-    return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null,
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Form */ "b"], null,
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* FormGroup */ "c"], null,
-                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Label */ "f"], { for: "exampleEmail" }, "Email"),
-                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Input */ "d"], { type: "email", name: "email", id: "exampleEmail", placeholder: "with a placeholder", onChange: e => setEmail(e.target.value) })),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* FormGroup */ "c"], null,
-                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Label */ "f"], { for: "examplePassword" }, "Password"),
-                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Input */ "d"], { type: "password", name: "password", id: "examplePassword", placeholder: "password placeholder", onChange: e => setPassword(e.target.value) })),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Button */ "a"], { onClick: () => {
+    return (react_1.default.createElement("div", null,
+        react_1.default.createElement(reactstrap_1.Form, null,
+            react_1.default.createElement(reactstrap_1.FormGroup, null,
+                react_1.default.createElement(reactstrap_1.Label, { for: "exampleEmail" }, "Email"),
+                react_1.default.createElement(reactstrap_1.Input, { type: "email", name: "email", id: "exampleEmail", placeholder: "with a placeholder", onChange: e => setEmail(e.target.value) })),
+            react_1.default.createElement(reactstrap_1.FormGroup, null,
+                react_1.default.createElement(reactstrap_1.Label, { for: "examplePassword" }, "Password"),
+                react_1.default.createElement(reactstrap_1.Input, { type: "password", name: "password", id: "examplePassword", placeholder: "password placeholder", onChange: e => setPassword(e.target.value) })),
+            react_1.default.createElement(reactstrap_1.Button, { onClick: () => {
                     const body = {
                         loginChallenge: loginChallenge,
                         subject: email,
@@ -296,7 +315,7 @@ function Login(props) {
                     console.log('login');
                 } }, "Login"))));
 }
-/* harmony default export */ __webpack_exports__["a"] = (Login);
+exports.default = Login;
 
 
 /***/ }),
@@ -305,15 +324,13 @@ function Login(props) {
 /*!****************************************!*\
   !*** ./src/web/frontend/TokenPage.tsx ***!
   \****************************************/
-/*! exports provided: default */
-/*! exports used: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -322,13 +339,41 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-
-
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const semantic_ui_react_1 = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
 const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/browser.js");
+function CreateCards() {
+    let cards = [];
+    for (let i = 0; i < 5; i++) {
+        cards.push(react_1.default.createElement(semantic_ui_react_1.Card, null,
+            react_1.default.createElement(semantic_ui_react_1.Image, { src: '/undefined.png', wrapped: true, ui: false }),
+            react_1.default.createElement(semantic_ui_react_1.Card.Content, null,
+                react_1.default.createElement(semantic_ui_react_1.Card.Header, null, "Matthew"),
+                react_1.default.createElement(semantic_ui_react_1.Card.Meta, null,
+                    react_1.default.createElement("span", { className: 'date' }, "Joined in 2015")),
+                react_1.default.createElement(semantic_ui_react_1.Card.Description, null, "Matthew is a musician living in Nashville.")),
+            react_1.default.createElement(semantic_ui_react_1.Card.Content, { extra: true })));
+    }
+    return cards;
+}
 function TokenPage(props) {
-    const [openid, setOpenid] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
-    const [data, setData] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({});
-    Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    const [openid, setOpenid] = react_1.useState(0);
+    const [data, setData] = react_1.useState({});
+    const [email, setEmail] = react_1.useState("");
+    const [gname, setGName] = react_1.useState("");
+    const [fname, setFName] = react_1.useState("");
+    const [username, setUsername] = react_1.useState("");
+    const [phone, setPhone] = react_1.useState("");
+    const [twofactor, setTwoFactor] = react_1.useState(false);
+    react_1.useEffect(() => {
         const fetchData = () => __awaiter(this, void 0, void 0, function* () {
             const result = yield fetch('/token/callback' + props.location.search);
             let data = yield result.json();
@@ -336,12 +381,60 @@ function TokenPage(props) {
         });
         fetchData();
     });
-    console.log(data);
-    return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null,
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Form */ "b"], null,
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Button */ "a"], null, "Login"))));
+    react_1.useEffect(() => {
+        const fetchData = () => __awaiter(this, void 0, void 0, function* () {
+            const result = yield fetch('http://127.0.0.1:3002/user-management/user/456?data=phone_number&data=email&data=given_name&data=family_name&data=preferred_username&data=two_factor');
+            let data = yield result.json();
+            console.log(data);
+            data = data.return_value;
+            setEmail(data.email);
+            setFName(data.family_name);
+            setGName(data.given_name);
+            setUsername(data.preferred_username);
+            setPhone(data.phone_number);
+            setTwoFactor(data.two_factor);
+            console.log(data.email);
+            console.log(data.two_factor);
+        });
+        fetchData();
+    }, []);
+    const panes = [
+        {
+            menuItem: 'User Information',
+            render: () => react_1.default.createElement(semantic_ui_react_1.Tab.Pane, { attached: false },
+                react_1.default.createElement(semantic_ui_react_1.Form, null,
+                    react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
+                        react_1.default.createElement(semantic_ui_react_1.Label, null, "Given Name"),
+                        react_1.default.createElement("input", { name: "given_name", type: "text", placeholder: gname, disabled: true })),
+                    react_1.default.createElement(semantic_ui_react_1.Divider, null),
+                    react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
+                        react_1.default.createElement(semantic_ui_react_1.Label, null, "Family Name"),
+                        react_1.default.createElement("input", { name: "family_name", type: "text", placeholder: fname, disabled: true })),
+                    react_1.default.createElement(semantic_ui_react_1.Divider, null),
+                    react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
+                        react_1.default.createElement(semantic_ui_react_1.Label, null, "Phone number"),
+                        react_1.default.createElement("input", { name: "phone_number", type: "text", placeholder: phone, disabled: true })),
+                    react_1.default.createElement(semantic_ui_react_1.Divider, null),
+                    react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
+                        react_1.default.createElement(semantic_ui_react_1.Label, null, "Email"),
+                        react_1.default.createElement("input", { name: "email", type: "text", placeholder: email, disabled: true })),
+                    react_1.default.createElement(semantic_ui_react_1.Divider, null),
+                    react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
+                        react_1.default.createElement(semantic_ui_react_1.Label, null, "Username"),
+                        react_1.default.createElement("input", { name: "preferred_username", type: "text", placeholder: username, disabled: true })),
+                    react_1.default.createElement(semantic_ui_react_1.Divider, null),
+                    react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
+                        react_1.default.createElement(semantic_ui_react_1.Checkbox, { toggle: true, label: 'TwoFactor', checked: twofactor, disabled: true })))),
+        },
+        {
+            menuItem: 'Groups',
+            render: () => react_1.default.createElement(semantic_ui_react_1.Tab.Pane, { attached: false }, CreateCards()),
+        }
+    ];
+    return (react_1.default.createElement("div", null,
+        react_1.default.createElement(semantic_ui_react_1.Tab, { menu: { secondary: true, pointing: true }, panes: panes })));
 }
-/* harmony default export */ __webpack_exports__["a"] = (TokenPage);
+exports.default = TokenPage;
 
 
 /***/ }),
@@ -350,26 +443,28 @@ function TokenPage(props) {
 /*!******************************************!*\
   !*** ./src/web/frontend/WelcomePage.tsx ***!
   \******************************************/
-/*! exports provided: default */
-/*! exports used: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 
-
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const reactstrap_1 = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/browser.js");
 const Example = (props) => {
-    return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null,
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Jumbotron */ "e"], null,
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", { className: "display-3" }, "Hello, world!"),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", { className: "lead" }, "This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information."),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", { className: "my-2" }),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "It uses utility classes for typography and spacing to space content out within the larger container."),
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", { className: "lead" },
-                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Button */ "a"], { color: "primary", onClick: () => {
+    return (react_1.default.createElement("div", null,
+        react_1.default.createElement(reactstrap_1.Jumbotron, null,
+            react_1.default.createElement("h1", { className: "display-3" }, "Hello, world!"),
+            react_1.default.createElement("p", { className: "lead" }, "This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information."),
+            react_1.default.createElement("hr", { className: "my-2" }),
+            react_1.default.createElement("p", null, "It uses utility classes for typography and spacing to space content out within the larger container."),
+            react_1.default.createElement("p", { className: "lead" },
+                react_1.default.createElement(reactstrap_1.Button, { color: "primary", onClick: () => {
                         fetch('/oauth2/code')
                             .then((res) => res.json())
                             .then((json) => {
@@ -377,11 +472,11 @@ const Example = (props) => {
                             window.location.href = json;
                         });
                     } }, "Login"),
-                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_1__[/* Button */ "a"], { color: "primary", onClick: () => {
+                react_1.default.createElement(reactstrap_1.Button, { color: "primary", onClick: () => {
                         window.location.href = 'http://127.0.0.1:3002';
                     } }, "Register")))));
 };
-/* harmony default export */ __webpack_exports__["a"] = (Example);
+exports.default = Example;
 
 
 /***/ }),
@@ -391,6 +486,7 @@ const Example = (props) => {
   !*** ./src/web/frontend/index.css ***!
   \************************************/
 /*! no static exports found */
+/*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
 var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!./index.css */ "./node_modules/css-loader/dist/cjs.js!./src/web/frontend/index.css");
@@ -417,33 +513,61 @@ if (content.locals) {
 /*!***********************************!*\
   !*** ./src/web/frontend/main.tsx ***!
   \***********************************/
-/*! no exports provided */
+/*! no static exports found */
 /*! all exports used */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.css */ "./src/web/frontend/index.css");
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App */ "./src/web/frontend/App.tsx");
-/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
-/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_4__);
 
-
-
-
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_dom_1 = __importDefault(__webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"));
+__webpack_require__(/*! ./index.css */ "./src/web/frontend/index.css");
+const App_1 = __importDefault(__webpack_require__(/*! ./App */ "./src/web/frontend/App.tsx"));
+__webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
+__webpack_require__(/*! ./style.css */ "./src/web/frontend/style.css");
 //import * as serviceWorker from './serviceWorker';
-
 console.log('wtf');
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_App__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], null), document.getElementById('root'));
+const styleLink = document.createElement("link");
+styleLink.rel = "stylesheet";
+styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
+document.head.appendChild(styleLink);
+react_dom_1.default.render(react_1.default.createElement(App_1.default, null), document.getElementById('root'));
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 //serviceWorker.unregister();
+
+
+/***/ }),
+
+/***/ "./src/web/frontend/style.css":
+/*!************************************!*\
+  !*** ./src/web/frontend/style.css ***!
+  \************************************/
+/*! no static exports found */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!./style.css */ "./node_modules/css-loader/dist/cjs.js!./src/web/frontend/style.css");
+
+if (typeof content === 'string') {
+  content = [[module.i, content, '']];
+}
+
+var options = {}
+
+options.insert = "head";
+options.singleton = false;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js")(content, options);
+
+if (content.locals) {
+  module.exports = content.locals;
+}
 
 
 /***/ })

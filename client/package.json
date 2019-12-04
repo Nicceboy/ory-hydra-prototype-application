@@ -27,11 +27,12 @@
     "react-router-dom": "^5.1.1",
     "react-scripts": "3.1.2",
     "reactstrap": "^8.0.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.1",
     "simple-oauth2": "^2.5.1",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.0.0",
     "ts-loader": "^6.2.1",
-    "typescript": "^3.6.3",
     "yarn": "^1.19.1"
   },
   "scripts": {
@@ -55,6 +56,9 @@
     ]
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "typescript": "3.6.4",
     "webpack-cli": "^3.3.10"
   }
 }

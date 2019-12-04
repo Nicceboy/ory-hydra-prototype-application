@@ -78,40 +78,6 @@ app.get('/oauth2/code', (req, res) => {
     req.session.client = client;
     res.send(JSON.stringify(url));
 });
-// app.get('/oauth2/code', (req: any, res: any) => {
-//   const credentials = {
-//     client: {
-//       id: 'auth-code-client'
-//     },
-//     auth: {
-//       tokenHost: config.public,
-//       authorizeHost: config.url,
-//       tokenPath: '/oauth2/token',
-//       authorizePath: '/oauth2/auth'
-//     }
-//   };
-//   const state = uuid.v4();
-//   const scope = req.query.scope || '';
-//   var code_verifier = '7073d688b6dcb02b9a2332e0792be265b9168fda7a6';
-//   var hash = crypto
-//     .createHash('sha256')
-//     .update(code_verifier)
-//     .digest();
-//   var code_challenge = base64url.encode(hash);
-//   req.session.credentials = credentials;
-//   req.session.state = state;
-//   req.session.scope = scope.split(' ');
-//   req.session.code_challenge = code_challenge;
-//   req.session.code_verifier = code_verifier;
-//   const url = oauth2.create(credentials).authorizationCode.authorizeURL({
-//     redirect_uri: `http://localhost:5555/callback`,
-//     scope,
-//     state,
-//     code_challenge,
-//     code_challenge_method: 'S256'
-//   });
-//   res.send(JSON.stringify(url));
-// });
 app.get('/token/callback', async (req, res) => {
     console.log(issuer);
     const params = client.callbackParams(req.url);
@@ -122,63 +88,18 @@ app.get('/token/callback', async (req, res) => {
             code_verifier,
             state: req.session.state
         }) // => Promise
-            .then(function (tokenSet) {
-            console.log('received and validated tokens %j', tokenSet);
-            console.log('validated ID Token claims %j', tokenSet.claims());
-            res.send({ result: 'success', tokenSet });
+            .then(function (token) {
+            res.send({ result: 'success', token });
         });
     }
     catch (e) {
         console.log(e);
     }
 });
-// app.get('/token/callback', async (req: any, res: any) => {
-//   if (req.query.error) {
-//     res.send(JSON.stringify(Object.assign({ result: 'error' }, req.query)));
-//     return;
-//   }
-//   if (req.query.state !== req.session.state) {
-//     res.send(JSON.stringify({ result: 'error', error: 'states mismatch' }));
-//     return;
-//   }
-//   if (!req.query.code) {
-//     res.send(JSON.stringify({ result: 'error', error: 'no code given' }));
-//     return;
-//   }
-//   let credentials = req.session.credentials;
-//   const httpOptions = {
-//     client_id: 'auth-code-client',
-//     code_verifier: req.session.code_verifier
-//   };
-//   oauth2
-//     .create(credentials)
-//     .authorizationCode.getToken(
-//       {
-//         redirect_uri: `http://localhost:5555/callback`,
-//         scope: req.session.scope,
-//         code: req.query.code,
-//         client_id: 'auth-code-client',
-//         code_verifier: req.session.code_verifier
-//       },
-//       httpOptions
-//     )
-//     .then((token: any) => {
-//       req.session.oauth2_flow = { token }; // code returns {access_token} because why not...
-//       res.send({ result: 'success', token });
-//     })
-//     .catch((err: any) => {
-//       if (err.data.payload) {
-//         res.send(JSON.stringify(err.data.payload));
-//         return;
-//       }
-//       res.send(JSON.stringify({ error: err.toString() }));
-//     });
-// });
 app.get('/*', (req, res) => {
     console.log('fuck');
     res.render('index');
 });
-// Start function
 exports.start = (port) => {
     const server = http_1.default.createServer(app);
     return new Promise((resolve, reject) => {
