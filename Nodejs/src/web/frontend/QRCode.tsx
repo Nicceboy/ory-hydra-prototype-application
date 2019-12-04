@@ -49,13 +49,16 @@ function QRCode(props: QRCodeProps) {
               token: token
             });
             console.log(verified);
+
             if (verified) {
+              console.log('put');
               const email = props.email;
               fetch('http://127.0.0.1:3002/user-management/user/' + email, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                  two_factorization_secret: secret
+                  two_factorization_secret:
+                    props.secretProps == '' ? secret : props.secretProps
                 })
               })
                 .then((res: any) => res.json()) // expecting a json response
