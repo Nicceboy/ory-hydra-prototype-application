@@ -346,19 +346,23 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const semantic_ui_react_1 = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
+const js_cookie_1 = __importDefault(__webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js"));
 const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/browser.js");
 function CreateCards() {
     let cards = [];
     for (let i = 0; i < 5; i++) {
         cards.push(react_1.default.createElement(semantic_ui_react_1.Card, null,
-            react_1.default.createElement(semantic_ui_react_1.Image, { src: '/undefined.png', wrapped: true, ui: false }),
+            react_1.default.createElement(semantic_ui_react_1.Image, { src: "/undefined.png", wrapped: true, ui: false }),
             react_1.default.createElement(semantic_ui_react_1.Card.Content, null,
                 react_1.default.createElement(semantic_ui_react_1.Card.Header, null, "Matthew"),
                 react_1.default.createElement(semantic_ui_react_1.Card.Meta, null,
-                    react_1.default.createElement("span", { className: 'date' }, "Joined in 2015")),
+                    react_1.default.createElement("span", { className: "date" }, "Joined in 2015")),
                 react_1.default.createElement(semantic_ui_react_1.Card.Description, null, "Matthew is a musician living in Nashville.")),
             react_1.default.createElement(semantic_ui_react_1.Card.Content, { extra: true })));
     }
@@ -367,17 +371,21 @@ function CreateCards() {
 function TokenPage(props) {
     const [openid, setOpenid] = react_1.useState(0);
     const [data, setData] = react_1.useState({});
-    const [email, setEmail] = react_1.useState("");
-    const [gname, setGName] = react_1.useState("");
-    const [fname, setFName] = react_1.useState("");
-    const [username, setUsername] = react_1.useState("");
-    const [phone, setPhone] = react_1.useState("");
+    const [email, setEmail] = react_1.useState('');
+    const [gname, setGName] = react_1.useState('');
+    const [fname, setFName] = react_1.useState('');
+    const [username, setUsername] = react_1.useState('');
+    const [phone, setPhone] = react_1.useState('');
     const [twofactor, setTwoFactor] = react_1.useState(false);
     react_1.useEffect(() => {
         const fetchData = () => __awaiter(this, void 0, void 0, function* () {
             const result = yield fetch('/token/callback' + props.location.search);
             let data = yield result.json();
             console.log(data);
+            let date = new Date('1970-01-01T00:00:00');
+            //adding seccond to '1970-01-01T00:00:00', and 2 hours for some reason the expire time is missing 2 hour
+            date = new Date(date.getTime() + 1000 * data.token.expires_at + 2 * 3600 * 1000);
+            js_cookie_1.default.set('token', data.token.access_token, { expires: 3 / 24 });
         });
         fetchData();
     });
@@ -401,7 +409,7 @@ function TokenPage(props) {
     const panes = [
         {
             menuItem: 'User Information',
-            render: () => react_1.default.createElement(semantic_ui_react_1.Tab.Pane, { attached: false },
+            render: () => (react_1.default.createElement(semantic_ui_react_1.Tab.Pane, { attached: false },
                 react_1.default.createElement(semantic_ui_react_1.Form, null,
                     react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
                         react_1.default.createElement(semantic_ui_react_1.Label, null, "Given Name"),
@@ -424,11 +432,11 @@ function TokenPage(props) {
                         react_1.default.createElement("input", { name: "preferred_username", type: "text", placeholder: username, disabled: true })),
                     react_1.default.createElement(semantic_ui_react_1.Divider, null),
                     react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
-                        react_1.default.createElement(semantic_ui_react_1.Checkbox, { toggle: true, label: 'TwoFactor', checked: twofactor, disabled: true })))),
+                        react_1.default.createElement(semantic_ui_react_1.Checkbox, { toggle: true, label: "TwoFactor", checked: twofactor, disabled: true })))))
         },
         {
             menuItem: 'Groups',
-            render: () => react_1.default.createElement(semantic_ui_react_1.Tab.Pane, { attached: false }, CreateCards()),
+            render: () => react_1.default.createElement(semantic_ui_react_1.Tab.Pane, { attached: false }, CreateCards())
         }
     ];
     return (react_1.default.createElement("div", null,
