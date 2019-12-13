@@ -50,7 +50,7 @@ function QRCode(props: QRCodeProps) {
             });
             console.log(verified);
 
-            if (verified) {
+            if (verified && props.secretProps != '') {
               console.log('put');
               const email = props.email;
               fetch('http://127.0.0.1:3002/user-management/user/' + email, {
@@ -68,6 +68,8 @@ function QRCode(props: QRCodeProps) {
                     window.location.href = props.url;
                   }
                 });
+            } else {
+              window.location.href = props.url;
             }
           }}
         >
