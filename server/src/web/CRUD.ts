@@ -2,9 +2,10 @@ import mongoose, { mongo } from 'mongoose';
 import chalk from 'chalk';
 import uuivd1 from 'uuid/v1'
 import bcrypt from 'bcrypt'
-import { CRUD_Result } from "../helpers/helper"
+import { CRUD_Result, TokenData } from "../helpers/helper"
 import { Dictionary } from 'express-serve-static-core';
 import { ReturnErrors } from '../helpers/helper'
+const fetch = require('node-fetch');
 
 
 var userSchema = require('../model/user')
@@ -60,24 +61,50 @@ export async function CheckCredntials(reqBody: any): Promise<CRUD_Result> {
   return result;
 }
 
-
-export async function FindUser(email: String, data: String): Promise<CRUD_Result> {
+export async function FindUser(token: String, data: String): Promise<CRUD_Result> {
   let result = {} as CRUD_Result;
   if (data == null)
     data = "_id";
-  var user = await Users.findOne({ 'email': email }, data)
-  if (user == null) {
-    result.error_value = ReturnErrors.NotFound
-    result.message = "User with email: " + email + " does not exist";
-    result.return_value = null;
-  } else {
-    result.error_value = ReturnErrors.None
-    result.message = "User Successfuly founded";
-    result.return_value = user;
+
+  const token_data = await GetTokenData(token);
+  if (token_data.active == true) {
+    let email: String = token_data.sub as String;
+    var user = await Users.findOne({ 'email': email }, data)
+    if (user == null) {
+      result.error_value = ReturnErrors.NotFound
+      result.message = "User with email: " + email + " does not exist";
+      result.return_value = null;
+    } else {
+      result.error_value = ReturnErrors.None
+      result.message = "User Successfuly founded";
+      result.return_value = user;
+    }
   }
+  else {
+    result.error_value = ReturnErrors.BadCredentials
+    result.message = "Token expired!!";
+    result.return_value = null;
+  }
+
   return result;
 }
 
+export async function GetTokenData(token: String): Promise<TokenData> {
+  const url = 'http://127.0.0.1:4445/oauth2/introspect'
+  let result = new TokenData(false, "", "", "", 0, 0, "", "");
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({ "token": token }),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'
+
+    }
+  })
+  const json = await response.json();
+  console.log(json);
+  result = json
+  return result;
+}
 export async function UpdateUser(filter: Dictionary<String>, update: Dictionary<String>): Promise<CRUD_Result> {
   let result = {} as CRUD_Result;
 

@@ -66,20 +66,26 @@ function TokenPage(props: Props) {
   });
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch(
-        'http://127.0.0.1:3002/user-management/user/456?data=phone_number&data=email&data=given_name&data=family_name&data=preferred_username&data=two_factor'
-      );
-      let data = await result.json();
-      console.log(data);
-      data = data.return_value;
-      setEmail(data.email);
-      setFName(data.family_name);
-      setGName(data.given_name);
-      setUsername(data.preferred_username);
-      setPhone(data.phone_number);
-      setTwoFactor(data.two_factor);
-      console.log(data.email);
-      console.log(data.two_factor);
+      let token:String = Cookies.get('token') as String;
+      console.log(token);
+      if(token != undefined)
+      {
+        const result = await fetch(
+          `http://127.0.0.1:3002/user-management/user/${token}?data=phone_number&data=email&data=given_name&data=family_name&data=preferred_username&data=two_factor`
+          );
+        let data = await result.json();
+        console.log(data);
+        data = data.return_value;
+        setEmail(data.email);
+        setFName(data.family_name);
+        setGName(data.given_name);
+        setUsername(data.preferred_username);
+        setPhone(data.phone_number);
+        setTwoFactor(data.two_factor);
+        console.log(data.email);
+        console.log(data.two_factor);
+      }
+     
     };
 
     fetchData();

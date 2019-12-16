@@ -391,18 +391,22 @@ function TokenPage(props) {
     });
     react_1.useEffect(() => {
         const fetchData = () => __awaiter(this, void 0, void 0, function* () {
-            const result = yield fetch('http://127.0.0.1:3002/user-management/user/456?data=phone_number&data=email&data=given_name&data=family_name&data=preferred_username&data=two_factor');
-            let data = yield result.json();
-            console.log(data);
-            data = data.return_value;
-            setEmail(data.email);
-            setFName(data.family_name);
-            setGName(data.given_name);
-            setUsername(data.preferred_username);
-            setPhone(data.phone_number);
-            setTwoFactor(data.two_factor);
-            console.log(data.email);
-            console.log(data.two_factor);
+            let token = js_cookie_1.default.get('token');
+            console.log(token);
+            if (token != undefined) {
+                const result = yield fetch(`http://127.0.0.1:3002/user-management/user/${token}?data=phone_number&data=email&data=given_name&data=family_name&data=preferred_username&data=two_factor`);
+                let data = yield result.json();
+                console.log(data);
+                data = data.return_value;
+                setEmail(data.email);
+                setFName(data.family_name);
+                setGName(data.given_name);
+                setUsername(data.preferred_username);
+                setPhone(data.phone_number);
+                setTwoFactor(data.two_factor);
+                console.log(data.email);
+                console.log(data.two_factor);
+            }
         });
         fetchData();
     }, []);

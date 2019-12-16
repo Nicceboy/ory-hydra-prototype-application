@@ -76,10 +76,12 @@ app.post('/user-management/user-login', async function(req, res) {
   }
   console.dir(JSON.stringify(result));
 });
-app.get('/user-management/user/:email', async function(req, res) {
-  let email: String = req.params.email;
+app.get('/user-management/user/:token', async function(req, res) {
+  console.log("Token Request!!");
+  console.log(req.params.token);
+  let token:String = req.params.token;
   console.log(req.query.data);
-  const result: CRUD_Result = await crud.FindUser(email, req.query.data);
+  const result: CRUD_Result = await crud.FindUser(token, req.query.data);
   if (result.error_value == ReturnErrors.None) {
     res.status(200).send(JSON.stringify(result));
   } else if (result.error_value == ReturnErrors.NotFound) {
@@ -89,7 +91,6 @@ app.get('/user-management/user/:email', async function(req, res) {
   }
   console.dir(JSON.stringify(result));
 });
-
 app.put('/user-management/user/:email', async function(req, res) {
   var filter = req.params.email;
   console.log(filter);

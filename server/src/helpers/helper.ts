@@ -18,6 +18,40 @@ export class CRUD_Result {
     this.redirect_to = redirect_to;
   }
 }
+
+
+export class TokenData {
+  active: Boolean;
+  scope: String | null;
+  sub: String | null;
+
+  client_id: String | null;
+  exp: Number | null;
+  iat: Number | null;
+  iss: String | null;
+  token_type: String | null;
+  constructor(
+    active: Boolean,
+    scope: String,
+    sub: String,
+    client_id: String,
+    exp: Number,
+    iat: Number,
+    iss: String,
+    token_type: String
+  ) {
+    this.active = active;
+    this.scope = scope;
+    this.sub = sub;
+    this.client_id = client_id;
+    this.exp = exp;
+    this.iat = iat;
+    this.iss = iss;
+    this.token_type = token_type;
+  }
+}
+
+
 export class CRUD_Error {
   message: String;
   error_value: Number;
