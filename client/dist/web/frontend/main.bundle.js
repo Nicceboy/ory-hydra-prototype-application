@@ -371,36 +371,36 @@ function CreateCards() {
 function TokenPage(props) {
     const [openid, setOpenid] = react_1.useState(0);
     const [data, setData] = react_1.useState({});
-    const [email, setEmail] = react_1.useState('');
-    const [gname, setGName] = react_1.useState('');
-    const [fname, setFName] = react_1.useState('');
-    const [username, setUsername] = react_1.useState('');
-    const [phone, setPhone] = react_1.useState('');
+    const [email, setEmail] = react_1.useState("");
+    const [gname, setGName] = react_1.useState("");
+    const [fname, setFName] = react_1.useState("");
+    const [username, setUsername] = react_1.useState("");
+    const [phone, setPhone] = react_1.useState("");
     const [twofactor, setTwoFactor] = react_1.useState(false);
     react_1.useEffect(() => {
         const fetchData = () => __awaiter(this, void 0, void 0, function* () {
-            const result = yield fetch('/token/callback' + props.location.search);
+            const result = yield fetch("/token/callback" + props.location.search);
             let data = yield result.json();
             console.log(data);
-            let date = new Date('1970-01-01T00:00:00');
+            let date = new Date("1970-01-01T00:00:00");
             //adding seccond to '1970-01-01T00:00:00', and 2 hours for some reason the expire time is missing 2 hour
             date = new Date(date.getTime() + 1000 * data.token.expires_at + 2 * 3600 * 1000);
-            js_cookie_1.default.set('token', data.token.access_token, { expires: 3 / 24 });
+            js_cookie_1.default.set("token", data.token.access_token, { expires: 3 / 24 });
         });
         fetchData();
     });
     react_1.useEffect(() => {
         const fetchData = () => __awaiter(this, void 0, void 0, function* () {
-            let token = js_cookie_1.default.get('token');
+            let token = js_cookie_1.default.get("token");
             console.log(token);
             if (token != undefined) {
-                const result = yield fetch(`http://127.0.0.1:3002/user-management/user/${token}?data=phone_number&data=email&data=given_name&data=family_name&data=preferred_username&data=two_factor`);
+                const result = yield fetch(`http://127.0.0.1:3002/user-management/user/${token}?data=phone_number&data=email&data=name&data=family_name&data=preferred_username&data=two_factor`);
                 let data = yield result.json();
                 console.log(data);
                 data = data.return_value;
                 setEmail(data.email);
                 setFName(data.family_name);
-                setGName(data.given_name);
+                setGName(data.name);
                 setUsername(data.preferred_username);
                 setPhone(data.phone_number);
                 setTwoFactor(data.two_factor);
@@ -412,7 +412,7 @@ function TokenPage(props) {
     }, []);
     const panes = [
         {
-            menuItem: 'User Information',
+            menuItem: "User Information",
             render: () => (react_1.default.createElement(semantic_ui_react_1.Tab.Pane, { attached: false },
                 react_1.default.createElement(semantic_ui_react_1.Form, null,
                     react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
@@ -439,7 +439,7 @@ function TokenPage(props) {
                         react_1.default.createElement(semantic_ui_react_1.Checkbox, { toggle: true, label: "TwoFactor", checked: twofactor, disabled: true })))))
         },
         {
-            menuItem: 'Groups',
+            menuItem: "Groups",
             render: () => react_1.default.createElement(semantic_ui_react_1.Tab.Pane, { attached: false }, CreateCards())
         }
     ];

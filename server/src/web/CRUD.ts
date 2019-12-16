@@ -6,6 +6,7 @@ import { CRUD_Result, TokenData } from "../helpers/helper"
 import { Dictionary } from 'express-serve-static-core';
 import { ReturnErrors } from '../helpers/helper'
 const fetch = require('node-fetch');
+import qs from 'qs'
 
 
 var userSchema = require('../model/user')
@@ -61,7 +62,7 @@ export async function CheckCredntials(reqBody: any): Promise<CRUD_Result> {
   return result;
 }
 
-export async function FindUser(token: String, data: String): Promise<CRUD_Result> {
+export async function FindUser(token: string, data: String): Promise<CRUD_Result> {
   let result = {} as CRUD_Result;
   if (data == null)
     data = "_id";
@@ -89,16 +90,17 @@ export async function FindUser(token: String, data: String): Promise<CRUD_Result
   return result;
 }
 
-export async function GetTokenData(token: String): Promise<TokenData> {
+export async function GetTokenData(token: string): Promise<TokenData> {
   const url = 'http://127.0.0.1:4445/oauth2/introspect'
   let result = new TokenData(false, "", "", "", 0, 0, "", "");
   const response = await fetch(url, {
     method: 'POST',
-    body: JSON.stringify({ "token": token }),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'
 
-    }
+    },
+    body: qs.stringify({ token: token })
+
   })
   const json = await response.json();
   console.log(json);

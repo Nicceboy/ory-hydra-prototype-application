@@ -32,11 +32,11 @@ app.set('views', 'public');
 
 // // Static files configuration
 // app.use("/assets", express.static(path.join(__dirname, "frontend")));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/assets', express.static(path.join(__dirname, 'frontend')));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
     'Access-Control-Allow-Headers',
@@ -51,7 +51,7 @@ app.get('/', (req: any, res: any) => {
 });
 //user management
 //-----------------------------------------------------------------------
-app.post('/user-management/user', async function(req, res) {
+app.post('/user-management/user', async function (req, res) {
   const result: CRUD_Result = await crud.CreateUser(req.body);
   if (result.error_value == ReturnErrors.None) {
     res.status(200).send(JSON.stringify(result));
@@ -62,7 +62,7 @@ app.post('/user-management/user', async function(req, res) {
   }
   console.dir(JSON.stringify(result));
 });
-app.post('/user-management/user-login', async function(req, res) {
+app.post('/user-management/user-login', async function (req, res) {
   console.log(req.body);
   const result: CRUD_Result = await crud.CheckCredntials(req.body);
   if (result.error_value == ReturnErrors.None) {
@@ -76,10 +76,10 @@ app.post('/user-management/user-login', async function(req, res) {
   }
   console.dir(JSON.stringify(result));
 });
-app.get('/user-management/user/:token', async function(req, res) {
+app.get('/user-management/user/:token', async function (req, res) {
   console.log("Token Request!!");
   console.log(req.params.token);
-  let token:String = req.params.token;
+  let token: string = req.params.token;
   console.log(req.query.data);
   const result: CRUD_Result = await crud.FindUser(token, req.query.data);
   if (result.error_value == ReturnErrors.None) {
@@ -91,7 +91,7 @@ app.get('/user-management/user/:token', async function(req, res) {
   }
   console.dir(JSON.stringify(result));
 });
-app.put('/user-management/user/:email', async function(req, res) {
+app.put('/user-management/user/:email', async function (req, res) {
   var filter = req.params.email;
   console.log(filter);
   const result: CRUD_Result = await crud.UpdateUser(
@@ -107,7 +107,7 @@ app.put('/user-management/user/:email', async function(req, res) {
   }
   console.dir(JSON.stringify(result));
 });
-app.delete('/user-management/user/:email', async function(req, res) {
+app.delete('/user-management/user/:email', async function (req, res) {
   var filter = req.params.email;
   const result: CRUD_Result = await crud.DeleteUser({ email: filter });
   if (result.error_value == ReturnErrors.None) {
@@ -123,7 +123,7 @@ app.delete('/user-management/user/:email', async function(req, res) {
 //-----------------------------------------------------------------------
 
 //-----------------------Group Management-------------------------------
-app.post('/CreateGroup', async function(req, res) {
+app.post('/CreateGroup', async function (req, res) {
   const result: CRUD_Result = await groupCrud.CreateGroup(req.body);
   if (result.error_value == ReturnErrors.None) {
     res.status(200).send(JSON.stringify(result));
@@ -135,7 +135,7 @@ app.post('/CreateGroup', async function(req, res) {
   console.dir(JSON.stringify(result));
 });
 
-app.post('/JoinGroup', async function(req, res) {
+app.post('/JoinGroup', async function (req, res) {
   const result: CRUD_Result = await groupCrud.AddUserInGroup(req.body);
   if (result.error_value == ReturnErrors.None) {
     res.status(200).send(JSON.stringify(result));
@@ -147,7 +147,7 @@ app.post('/JoinGroup', async function(req, res) {
   console.dir(JSON.stringify(result));
 });
 
-app.post('/GroupInfo', async function(req, res) {
+app.post('/GroupInfo', async function (req, res) {
   const result: GroupInfo_Result = await groupCrud.GetGroupInfo(req.body);
   if (result.error_value == ReturnErrors.None) {
     res.status(200).send(JSON.stringify(result));
