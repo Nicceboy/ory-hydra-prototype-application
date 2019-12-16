@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import QRCodeReact, { QRCode } from 'qrcode.react';
-import { Jumbotron, Button } from 'reactstrap';
-import speakeasy from 'speakeasy';
-import { url } from 'inspector';
+import React, { useState, useEffect } from "react";
+import QRCodeReact, { QRCode } from "qrcode.react";
+import { Jumbotron, Button } from "reactstrap";
+import speakeasy from "speakeasy";
+import { url } from "inspector";
 
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 type QRCodeProps = {
   email: string;
   url: string;
   secretProps: string;
 };
 function QRCode(props: QRCodeProps) {
-  const [qrcode, setQrcode] = useState('');
-  const [token, setToken] = useState('');
-  const [secret, setSecret] = useState('');
+  const [qrcode, setQrcode] = useState("");
+  const [token, setToken] = useState("");
+  const [secret, setSecret] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      fetch('/mfa/activate', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+    const fetchData = () => {
+      fetch("/mfa/activate", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
       })
         .then((res: any) => res.json()) // expecting a json response
         .then((json: any) => {
@@ -44,32 +44,34 @@ function QRCode(props: QRCodeProps) {
             console.log(props.secretProps);
             console.log(secret);
             var verified = speakeasy.totp.verify({
-              secret: props.secretProps == '' ? secret : props.secretProps,
-              encoding: 'hex',
+              secret: props.secretProps === "" ? secret : props.secretProps,
+              encoding: "hex",
               token: token
             });
             console.log(verified);
-
-            if (verified && props.secretProps == '') {
-              console.log('put');
-              const email = props.email;
-              fetch('http://127.0.0.1:3002/user-management/user/' + email, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  two_factorization_secret:
-                    props.secretProps == '' ? secret : props.secretProps
+            console.log(props.secretProps);
+            if (verified) {
+              if (props.secretProps === "") {
+                console.log("put");
+                const email = props.email;
+                fetch("http://127.0.0.1:3002/user-management/user/" + email, {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    two_factorization_secret:
+                      props.secretProps === "" ? secret : props.secretProps
+                  })
                 })
-              })
-                .then((res: any) => res.json()) // expecting a json response
-                .then((json: any) => {
-                  console.log(json);
-                  if (json.error_value == 0) {
-                    window.location.href = props.url;
-                  }
-                });
-            } else {
-              window.location.href = props.url;
+                  .then((res: any) => res.json()) // expecting a json response
+                  .then((json: any) => {
+                    console.log(json);
+                    if (json.error_value == 0) {
+                      window.location.href = props.url;
+                    }
+                  });
+              } else {
+                window.location.href = props.url;
+              }
             }
           }}
         >
@@ -77,7 +79,7 @@ function QRCode(props: QRCodeProps) {
         </Button>
       </form>
 
-      {props.secretProps == '' ? <img src={qrcode} /> : undefined}
+      {props.secretProps == "" ? <img src={qrcode} /> : undefined}
     </div>
   );
 }
