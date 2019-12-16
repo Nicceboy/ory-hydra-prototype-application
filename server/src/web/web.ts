@@ -59,6 +59,8 @@ app.post('/user-management/user', async function (req, res) {
     res.status(404).send(JSON.stringify(result));
   } else if (result.error_value == ReturnErrors.BadRequest) {
     res.status(400).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadCredentials) {
+    res.status(401).send(JSON.stringify(result));
   }
   console.dir(JSON.stringify(result));
 });
@@ -88,6 +90,8 @@ app.get('/user-management/user/:token', async function (req, res) {
     res.status(404).send(JSON.stringify(result));
   } else if (result.error_value == ReturnErrors.BadRequest) {
     res.status(400).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadCredentials) {
+    res.status(401).send(JSON.stringify(result));
   }
   console.dir(JSON.stringify(result));
 });
@@ -104,6 +108,8 @@ app.put('/user-management/user/:email', async function (req, res) {
     res.status(404).send(JSON.stringify(result));
   } else if (result.error_value == ReturnErrors.BadRequest) {
     res.status(400).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadCredentials) {
+    res.status(401).send(JSON.stringify(result));
   }
   console.dir(JSON.stringify(result));
 });
@@ -116,6 +122,8 @@ app.delete('/user-management/user/:email', async function (req, res) {
     res.status(404).send(JSON.stringify(result));
   } else if (result.error_value == ReturnErrors.BadRequest) {
     res.status(400).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadCredentials) {
+    res.status(401).send(JSON.stringify(result));
   }
   console.dir(JSON.stringify(result));
 });

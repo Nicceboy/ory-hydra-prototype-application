@@ -74,15 +74,18 @@ function TokenPage(props: Props) {
         );
         let data = await result.json();
         console.log(data);
-        data = data.return_value;
-        setEmail(data.email);
-        setFName(data.family_name);
-        setGName(data.name);
-        setUsername(data.preferred_username);
-        setPhone(data.phone_number);
-        setTwoFactor(data.two_factor);
-        console.log(data.email);
-        console.log(data.two_factor);
+        let dataReturn = data.return_value;
+
+        if (data.error_value === 0) {
+          setEmail(dataReturn.email);
+          setFName(dataReturn.family_name);
+          setGName(dataReturn.name);
+          setUsername(dataReturn.preferred_username);
+          setPhone(dataReturn.phone_number);
+          setTwoFactor(dataReturn.two_factor);
+          console.log(dataReturn.email);
+          console.log(dataReturn.two_factor);
+        }
       }
     };
 
