@@ -63,7 +63,7 @@ function TokenPage(props: Props) {
       Cookies.set("token", data.token.access_token, { expires: 3 / 24 });
     };
     fetchData();
-  });
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       let token: String = Cookies.get("token") as String;

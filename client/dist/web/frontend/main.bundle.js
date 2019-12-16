@@ -388,7 +388,7 @@ function TokenPage(props) {
             js_cookie_1.default.set("token", data.token.access_token, { expires: 3 / 24 });
         });
         fetchData();
-    });
+    }, []);
     react_1.useEffect(() => {
         const fetchData = () => __awaiter(this, void 0, void 0, function* () {
             let token = js_cookie_1.default.get("token");
