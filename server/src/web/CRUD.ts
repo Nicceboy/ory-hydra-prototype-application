@@ -109,23 +109,41 @@ export async function GetTokenData(token: string): Promise<TokenData> {
 }
 export async function UpdateUser(filter: Dictionary<String>, update: Dictionary<String>): Promise<CRUD_Result> {
   let result = {} as CRUD_Result;
+  var user = await Users.findOne({ 'email': filter.email }).select('password')
+  if (user != null) {
+    let passwordCredentialResult: Boolean = await CheckHashedPassword(filter.password, user.get('password'));
+    try {
+      if (passwordCredentialResult) {
+        delete update['password']
+        user = await Users.findOneAndUpdate({ 'email': filter.email }, update, { new: true }).select(update);
+        if (user == null) {
+          result.error_value = ReturnErrors.NotFound
+          result.message = "User not found!!";
+          result.return_value = null;
+        } else {
+          result.error_value = ReturnErrors.None
+          result.message = "User Successfuly founded and updated";
+          result.return_value = user;
+        }
+      }
+      else {
+        result.error_value = ReturnErrors.BadCredentials
+        result.message = 'Bad Credentials';
+        result.return_value = null;
+      }
 
-  try {
-    var user = await Users.findOneAndUpdate(filter, update, { new: true }).select(update);
-    if (user == null) {
-      result.error_value = ReturnErrors.NotFound
-      result.message = "User not found!!";
+    } catch (error) {
+      result.error_value = ReturnErrors.BadRequest
+      result.message = error;
       result.return_value = null;
-    } else {
-      result.error_value = ReturnErrors.None
-      result.message = "User Successfuly founded and updated";
-      result.return_value = user;
     }
-  } catch (error) {
-    result.error_value = ReturnErrors.BadRequest
-    result.message = error;
+
+  } else {
+    result.error_value = ReturnErrors.NotFound
+    result.message = "User not found!!";
     result.return_value = null;
   }
+
 
   return result;
 }
@@ -133,18 +151,40 @@ export async function UpdateUser(filter: Dictionary<String>, update: Dictionary<
 
 export async function DeleteUser(filter: Dictionary<String>): Promise<CRUD_Result> {
   let result = {} as CRUD_Result;
+  var user = await Users.findOne({ 'email': filter.email }).select('password')
 
-  try {
-    var user = await Users.findOneAndDelete(filter).select('email _id');
-    result.error_value = 0
-    result.message = "User Successfuly founded and deleted";
-    result.return_value = user;
-  } catch (error) {
-    result.error_value = 100
-    result.message = error;
+  if (user != null) {
+    let passwordCredentialResult: Boolean = await CheckHashedPassword(filter.password, user.get('password'));
+    try {
+      if (passwordCredentialResult) {
+        user = await Users.findOneAndDelete({ 'email': filter.email });
+        if (user == null) {
+          result.error_value = ReturnErrors.NotFound
+          result.message = "User not found!!";
+          result.return_value = null;
+        } else {
+          result.error_value = ReturnErrors.None
+          result.message = "User Successfuly founded and deleted";
+          result.return_value = user;
+        }
+      }
+      else {
+        result.error_value = ReturnErrors.BadCredentials
+        result.message = 'Bad Credentials';
+        result.return_value = null;
+      }
+
+    } catch (error) {
+      result.error_value = ReturnErrors.BadRequest
+      result.message = error;
+      result.return_value = null;
+    }
+
+  } else {
+    result.error_value = ReturnErrors.NotFound
+    result.message = "User not found!!";
     result.return_value = null;
   }
-
   return result;
 }
 //----------------------------------------------------------------------------------------------

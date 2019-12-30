@@ -11,6 +11,13 @@ const crypto = require('crypto');
 const base64url = require('base64url');
 const { generators } = require('openid-client');
 const { Issuer } = require('openid-client');
+import { CRUD_Result } from './helpers/helper';
+import * as groupCrud from './GroupCRUD';
+import { ReturnErrors } from './helpers/helper';
+import { GroupInfo_Result } from './helpers/helper';
+import * as db from './database';
+
+var connector = db.run();
 
 const metaIssuser = {
   authorization_endpoint: 'http://127.0.0.1:4444/oauth2/auth',
@@ -21,7 +28,7 @@ const metaIssuser = {
 
 const issuer = new Issuer(metaIssuser);
 Issuer.discover('http://127.0.0.1:4444/.well-known/openid-configuration') // => Promise
-  .then(function(googleIssuer: any) {
+  .then(function (googleIssuer: any) {
     console.log(
       'Discovered issuer %s %O',
       googleIssuer.issuer,
@@ -41,7 +48,15 @@ client.grant('authorization_code, refresh_token');
 const app = express();
 
 app.use(cookieParser());
-
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST');
+  next();
+});
 const session = {
   secret: 'LoxodontaElephasMammuthusPalaeoloxodonPrimelephas',
   cookie: {},
@@ -99,15 +114,75 @@ app.get('/token/callback', async (req: any, res: any) => {
         code_verifier,
         state: req.session.state
       }) // => Promise
-      .then(function(token: any) {
+      .then(function (token: any) {
         res.send({ result: 'success', token });
       });
   } catch (e) {
     console.log(e);
   }
 });
+
+//-----------------------Group Management-------------------------------
+app.post('/group-management/CreateGroup/:token', async function (req, res) {
+  console.log(req.params.token);
+  const result: CRUD_Result = await groupCrud.CreateGroup(req.body, req.params.token);
+  if (result.error_value == ReturnErrors.None) {
+    res.status(200).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.NotFound) {
+    res.status(404).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadRequest) {
+    res.status(400).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadCredentials) {
+    res.status(401).send(JSON.stringify(result));
+  }
+  console.dir(JSON.stringify(result));
+});
+
+app.post('/group-management/AddToGroup/:token', async function (req, res) {
+  const result: CRUD_Result = await groupCrud.AddUserInGroup(req.body, req.params.token);
+  if (result.error_value == ReturnErrors.None) {
+    res.status(200).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.NotFound) {
+    res.status(404).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadRequest) {
+    res.status(400).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadCredentials) {
+    res.status(401).send(JSON.stringify(result));
+  }
+  console.dir(JSON.stringify(result));
+});
+
+app.post('/group-management/JoinGroup/:token', async function (req, res) {
+  const result: GroupInfo_Result = await groupCrud.JoinToGroup(req.body, req.params.token);
+  if (result.error_value == ReturnErrors.None) {
+    res.status(200).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.NotFound) {
+    res.status(404).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadRequest) {
+    res.status(400).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadCredentials) {
+    res.status(401).send(JSON.stringify(result));
+  }
+  console.dir(JSON.stringify(result));
+});
+
+app.get('/group-management/GroupInfo/:groupID/:userID/:token', async function (req, res) {
+  const result: GroupInfo_Result = await groupCrud.GetGroupInfo(req.params.groupID, req.params.userID, req.params.token);
+  if (result.error_value == ReturnErrors.None) {
+    res.status(200).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.NotFound) {
+    res.status(404).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadRequest) {
+    res.status(400).send(JSON.stringify(result));
+  } else if (result.error_value == ReturnErrors.BadCredentials) {
+    res.status(401).send(JSON.stringify(result));
+  }
+  console.dir(JSON.stringify(result));
+});
+//-----------------------------------------------------------------------
+
+
 app.get('/*', (req: any, res: any) => {
-  console.log('fuck');
   res.render('index');
 });
 export const start = (port: number): Promise<void> => {

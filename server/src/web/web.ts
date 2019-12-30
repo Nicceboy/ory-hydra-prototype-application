@@ -96,10 +96,8 @@ app.get('/user-management/user/:token', async function (req, res) {
   console.dir(JSON.stringify(result));
 });
 app.put('/user-management/user/:email', async function (req, res) {
-  var filter = req.params.email;
-  console.log(filter);
   const result: CRUD_Result = await crud.UpdateUser(
-    { email: filter },
+    { email: req.params.email, password: req.body.password },
     req.body
   );
   if (result.error_value == ReturnErrors.None) {
@@ -114,8 +112,7 @@ app.put('/user-management/user/:email', async function (req, res) {
   console.dir(JSON.stringify(result));
 });
 app.delete('/user-management/user/:email', async function (req, res) {
-  var filter = req.params.email;
-  const result: CRUD_Result = await crud.DeleteUser({ email: filter });
+  const result: CRUD_Result = await crud.DeleteUser({ email: req.params.email, password: req.body.password });
   if (result.error_value == ReturnErrors.None) {
     res.status(200).send(JSON.stringify(result));
   } else if (result.error_value == ReturnErrors.NotFound) {
@@ -130,43 +127,7 @@ app.delete('/user-management/user/:email', async function (req, res) {
 
 //-----------------------------------------------------------------------
 
-//-----------------------Group Management-------------------------------
-app.post('/CreateGroup', async function (req, res) {
-  const result: CRUD_Result = await groupCrud.CreateGroup(req.body);
-  if (result.error_value == ReturnErrors.None) {
-    res.status(200).send(JSON.stringify(result));
-  } else if (result.error_value == ReturnErrors.NotFound) {
-    res.status(404).send(JSON.stringify(result));
-  } else if (result.error_value == ReturnErrors.BadRequest) {
-    res.status(400).send(JSON.stringify(result));
-  }
-  console.dir(JSON.stringify(result));
-});
 
-app.post('/JoinGroup', async function (req, res) {
-  const result: CRUD_Result = await groupCrud.AddUserInGroup(req.body);
-  if (result.error_value == ReturnErrors.None) {
-    res.status(200).send(JSON.stringify(result));
-  } else if (result.error_value == ReturnErrors.NotFound) {
-    res.status(404).send(JSON.stringify(result));
-  } else if (result.error_value == ReturnErrors.BadRequest) {
-    res.status(400).send(JSON.stringify(result));
-  }
-  console.dir(JSON.stringify(result));
-});
-
-app.post('/GroupInfo', async function (req, res) {
-  const result: GroupInfo_Result = await groupCrud.GetGroupInfo(req.body);
-  if (result.error_value == ReturnErrors.None) {
-    res.status(200).send(JSON.stringify(result));
-  } else if (result.error_value == ReturnErrors.NotFound) {
-    res.status(404).send(JSON.stringify(result));
-  } else if (result.error_value == ReturnErrors.BadRequest) {
-    res.status(400).send(JSON.stringify(result));
-  }
-  console.dir(JSON.stringify(result));
-});
-//-----------------------------------------------------------------------
 
 // Start function
 export const start = (port: number): Promise<void> => {

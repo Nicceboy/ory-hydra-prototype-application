@@ -370,7 +370,7 @@ function CreateCards() {
 }
 function TokenPage(props) {
     const [openid, setOpenid] = react_1.useState(0);
-    const [data, setData] = react_1.useState({});
+    const [data, setData] = react_1.useState("");
     const [email, setEmail] = react_1.useState("");
     const [gname, setGName] = react_1.useState("");
     const [fname, setFName] = react_1.useState("");
@@ -386,19 +386,13 @@ function TokenPage(props) {
             //adding seccond to '1970-01-01T00:00:00', and 2 hours for some reason the expire time is missing 2 hour
             date = new Date(date.getTime() + 1000 * data.token.expires_at + 2 * 3600 * 1000);
             js_cookie_1.default.set("token", data.token.access_token, { expires: 3 / 24 });
-        });
-        fetchData();
-    }, []);
-    react_1.useEffect(() => {
-        const fetchData = () => __awaiter(this, void 0, void 0, function* () {
-            let token = js_cookie_1.default.get("token");
-            console.log(token);
-            if (token != undefined) {
-                const result = yield fetch(`http://127.0.0.1:3002/user-management/user/${token}?data=phone_number&data=email&data=name&data=family_name&data=preferred_username&data=two_factor`);
-                let data = yield result.json();
-                console.log(data);
-                let dataReturn = data.return_value;
-                if (data.error_value === 0) {
+            setData(data.token.access_token);
+            if (data.token.access_token != undefined) {
+                const result1 = yield fetch(`http://127.0.0.1:3002/user-management/user/${data.token.access_token}?data=phone_number&data=email&data=name&data=family_name&data=preferred_username&data=two_factor`);
+                let data1 = yield result1.json();
+                console.log(data1);
+                let dataReturn = data1.return_value;
+                if (data1.error_value === 0) {
                     setEmail(dataReturn.email);
                     setFName(dataReturn.family_name);
                     setGName(dataReturn.name);
@@ -412,6 +406,31 @@ function TokenPage(props) {
         });
         fetchData();
     }, []);
+    // useEffect(() => {
+    //   const fetchData = async () => {
+    //     let token: String = data as String;
+    //     console.log(token);
+    //     if (token != undefined) {
+    //       const result = await fetch(
+    //         `http://127.0.0.1:3002/user-management/user/${token}?data=phone_number&data=email&data=name&data=family_name&data=preferred_username&data=two_factor`
+    //       );
+    //       let data = await result.json();
+    //       console.log(data);
+    //       let dataReturn = data.return_value;
+    //       if (data.error_value === 0) {
+    //         setEmail(dataReturn.email);
+    //         setFName(dataReturn.family_name);
+    //         setGName(dataReturn.name);
+    //         setUsername(dataReturn.preferred_username);
+    //         setPhone(dataReturn.phone_number);
+    //         setTwoFactor(dataReturn.two_factor);
+    //         console.log(dataReturn.email);
+    //         console.log(dataReturn.two_factor);
+    //       }
+    //     }
+    //   };
+    //   fetchData();
+    // }, []);
     const panes = [
         {
             menuItem: "User Information",
@@ -419,23 +438,38 @@ function TokenPage(props) {
                 react_1.default.createElement(semantic_ui_react_1.Form, null,
                     react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
                         react_1.default.createElement(semantic_ui_react_1.Label, null, "Name"),
-                        react_1.default.createElement("input", { name: "name", type: "text", placeholder: gname, disabled: true })),
+                        react_1.default.createElement("input", { name: "name", type: "text", 
+                            // placeholder={gname}
+                            // disabled={true}
+                            defaultValue: gname })),
                     react_1.default.createElement(semantic_ui_react_1.Divider, null),
                     react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
                         react_1.default.createElement(semantic_ui_react_1.Label, null, "Family Name"),
-                        react_1.default.createElement("input", { name: "family_name", type: "text", placeholder: fname, disabled: true })),
+                        react_1.default.createElement("input", { name: "family_name", type: "text", 
+                            // placeholder={fname}
+                            // disabled={true}
+                            defaultValue: fname })),
                     react_1.default.createElement(semantic_ui_react_1.Divider, null),
                     react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
                         react_1.default.createElement(semantic_ui_react_1.Label, null, "Phone number"),
-                        react_1.default.createElement("input", { name: "phone_number", type: "text", placeholder: phone, disabled: true })),
+                        react_1.default.createElement("input", { name: "phone_number", type: "text", 
+                            // placeholder={phone}
+                            // disabled={true}
+                            defaultValue: phone })),
                     react_1.default.createElement(semantic_ui_react_1.Divider, null),
                     react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
                         react_1.default.createElement(semantic_ui_react_1.Label, null, "Email"),
-                        react_1.default.createElement("input", { name: "email", type: "text", placeholder: email, disabled: true })),
+                        react_1.default.createElement("input", { name: "email", type: "text", 
+                            // placeholder={email}
+                            // disabled={true}
+                            defaultValue: email })),
                     react_1.default.createElement(semantic_ui_react_1.Divider, null),
                     react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
                         react_1.default.createElement(semantic_ui_react_1.Label, null, "Username"),
-                        react_1.default.createElement("input", { name: "preferred_username", type: "text", placeholder: username, disabled: true })),
+                        react_1.default.createElement("input", { name: "preferred_username", type: "text", 
+                            // placeholder={username}
+                            // disabled={true}
+                            defaultValue: username })),
                     react_1.default.createElement(semantic_ui_react_1.Divider, null),
                     react_1.default.createElement(semantic_ui_react_1.Form.Field, null,
                         react_1.default.createElement(semantic_ui_react_1.Checkbox, { toggle: true, label: "TwoFactor", checked: twofactor, disabled: true })))))

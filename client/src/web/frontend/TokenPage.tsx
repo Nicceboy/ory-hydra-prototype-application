@@ -42,7 +42,7 @@ function CreateCards() {
 }
 function TokenPage(props: Props) {
   const [openid, setOpenid] = useState(0);
-  const [data, setData] = useState({});
+  const [data, setData] = useState("");
   const [email, setEmail] = useState("");
   const [gname, setGName] = useState("");
   const [fname, setFName] = useState("");
@@ -61,22 +61,16 @@ function TokenPage(props: Props) {
         date.getTime() + 1000 * data.token.expires_at + 2 * 3600 * 1000
       );
       Cookies.set("token", data.token.access_token, { expires: 3 / 24 });
-    };
-    fetchData();
-  }, []);
-  useEffect(() => {
-    const fetchData = async () => {
-      let token: String = Cookies.get("token") as String;
-      console.log(token);
-      if (token != undefined) {
-        const result = await fetch(
-          `http://127.0.0.1:3002/user-management/user/${token}?data=phone_number&data=email&data=name&data=family_name&data=preferred_username&data=two_factor`
+      setData(data.token.access_token);
+      if (data.token.access_token != undefined) {
+        const result1 = await fetch(
+          `http://127.0.0.1:3002/user-management/user/${data.token.access_token}?data=phone_number&data=email&data=name&data=family_name&data=preferred_username&data=two_factor`
         );
-        let data = await result.json();
-        console.log(data);
-        let dataReturn = data.return_value;
+        let data1 = await result1.json();
+        console.log(data1);
+        let dataReturn = data1.return_value;
 
-        if (data.error_value === 0) {
+        if (data1.error_value === 0) {
           setEmail(dataReturn.email);
           setFName(dataReturn.family_name);
           setGName(dataReturn.name);
@@ -88,9 +82,35 @@ function TokenPage(props: Props) {
         }
       }
     };
-
     fetchData();
   }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     let token: String = data as String;
+  //     console.log(token);
+  //     if (token != undefined) {
+  //       const result = await fetch(
+  //         `http://127.0.0.1:3002/user-management/user/${token}?data=phone_number&data=email&data=name&data=family_name&data=preferred_username&data=two_factor`
+  //       );
+  //       let data = await result.json();
+  //       console.log(data);
+  //       let dataReturn = data.return_value;
+
+  //       if (data.error_value === 0) {
+  //         setEmail(dataReturn.email);
+  //         setFName(dataReturn.family_name);
+  //         setGName(dataReturn.name);
+  //         setUsername(dataReturn.preferred_username);
+  //         setPhone(dataReturn.phone_number);
+  //         setTwoFactor(dataReturn.two_factor);
+  //         console.log(dataReturn.email);
+  //         console.log(dataReturn.two_factor);
+  //       }
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   const panes = [
     {
@@ -103,8 +123,9 @@ function TokenPage(props: Props) {
               <input
                 name="name"
                 type="text"
-                placeholder={gname}
-                disabled={true}
+                // placeholder={gname}
+                // disabled={true}
+                defaultValue={gname}
               />
             </Form.Field>
             <Divider />
@@ -114,8 +135,9 @@ function TokenPage(props: Props) {
               <input
                 name="family_name"
                 type="text"
-                placeholder={fname}
-                disabled={true}
+                // placeholder={fname}
+                // disabled={true}
+                defaultValue={fname}
               />
             </Form.Field>
             <Divider />
@@ -124,8 +146,9 @@ function TokenPage(props: Props) {
               <input
                 name="phone_number"
                 type="text"
-                placeholder={phone}
-                disabled={true}
+                // placeholder={phone}
+                // disabled={true}
+                defaultValue={phone}
               />
             </Form.Field>
             <Divider />
@@ -134,8 +157,9 @@ function TokenPage(props: Props) {
               <input
                 name="email"
                 type="text"
-                placeholder={email}
-                disabled={true}
+                // placeholder={email}
+                // disabled={true}
+                defaultValue={email}
               />
             </Form.Field>
             <Divider />
@@ -145,8 +169,9 @@ function TokenPage(props: Props) {
               <input
                 name="preferred_username"
                 type="text"
-                placeholder={username}
-                disabled={true}
+                // placeholder={username}
+                // disabled={true}
+                defaultValue={username}
               />
             </Form.Field>
             <Divider />
