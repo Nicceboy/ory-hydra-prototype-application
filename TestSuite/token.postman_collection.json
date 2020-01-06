@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "9a0548e2-b131-4bbd-aea0-c81c90b51235",
+		"name": "token",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "joingroup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "ID",
+							"value": "5e0a14dbdfd6d176e8adfb40",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "bn@bn.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/group-management/JoinGroup/FL6zODfdmaVmotOADcDBCNKyz1UWDBAw1ldWJISsd2Y.Qvn2360p2PYyn4Tt9KTwIK6bY_zeMKD177uRNGTS2yQ",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"group-management",
+						"JoinGroup",
+						"FL6zODfdmaVmotOADcDBCNKyz1UWDBAw1ldWJISsd2Y.Qvn2360p2PYyn4Tt9KTwIK6bY_zeMKD177uRNGTS2yQ"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creategroup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "ID",
+							"value": "5e0a11dbdfd6d176e8adfb40",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "bn@bn.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/group-management/CreateGroup/FL6zODfdmaVmoOADcDBCNKyz1UWDBAw1ldWJISsd2Y.Qvn2360p2PYyn4Tt9KTwIK6bY_zeMKD177uRNGTS2yQ",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"group-management",
+						"CreateGroup",
+						"FL6zODfdmaVmoOADcDBCNKyz1UWDBAw1ldWJISsd2Y.Qvn2360p2PYyn4Tt9KTwIK6bY_zeMKD177uRNGTS2yQ"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GroupInfo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5555/group-management/GroupInfo/5e0a14dbdfd6d176e8adfb40/5e134e5943ae1e169cf33af8/FL6zODfdmaVmotOADcDBCNKyz1UWDBAw1ldWJISsd2Y.Qvn2360p2PYyn4Tt9KTwIK6bY_zeMKD177uRNGTS2yQ",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5555",
+					"path": [
+						"group-management",
+						"GroupInfo",
+						"5e0a14dbdfd6d176e8adfb40",
+						"5e134e5943ae1e169cf33af8",
+						"FL6zODfdmaVmotOADcDBCNKyz1UWDBAw1ldWJISsd2Y.Qvn2360p2PYyn4Tt9KTwIK6bY_zeMKD177uRNGTS2yQ"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3002/user-management/user/FL6zODfdmaVmotOADcDBCNKyz1UWDBAw1ldWJISsd2Y.Qvn2360p2PYyn4Tt9KTwIK6bY_zeMKD177uRNGTS2yQ",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3002",
+					"path": [
+						"user-management",
+						"user",
+						"FL6zODfdmaVmotOADcDBCNKyz1UWDBAw1ldWJISsd2Y.Qvn2360p2PYyn4Tt9KTwIK6bY_zeMKD177uRNGTS2yQ"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
