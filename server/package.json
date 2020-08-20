@@ -29,7 +29,7 @@
     "@types/react-router-dom": "^5.1.0",
     "@types/reactstrap": "^8.0.6",
     "@types/uuid": "^3.4.5",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
     "css-loader": "^3.2.0",
